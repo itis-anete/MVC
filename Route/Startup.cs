@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Rewrite;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -49,11 +50,16 @@ namespace Route
             app.UseStaticFiles();
             app.UseCookiePolicy();
 
+
+            app.UseRewriter(new RewriteOptions().AddRedirect(@"(.*)/daun", "$1/krasavchik"));
+
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
+
+                routes.Routes.Add(new Router());
             });
         }
     }

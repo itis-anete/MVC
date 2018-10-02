@@ -1,53 +1,11 @@
-﻿using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
+﻿using System;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Abstractions;
 using Microsoft.AspNetCore.Mvc.Controllers;
-using Microsoft.AspNetCore.Routing;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Route
 {
-    public class RouteBuilder : IRouteBuilder
-    {
-        public IApplicationBuilder ApplicationBuilder { get; }
-
-        public IRouter DefaultHandler { get; set; }
-
-        public IServiceProvider ServiceProvider { get; }
-
-        public IList<IRouter> Routes { get; }
-
-        public IRouter Build()
-        {
-            throw new NotImplementedException();
-        }
-    }
-
-    public class ROuter : IRouter
-    {
-        public VirtualPathData GetVirtualPath(VirtualPathContext context)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task RouteAsync(RouteContext context)
-        {
-            throw new NotImplementedException();
-        }
-    }
-
-    public class RouteHandler : IRouteHandler
-    {
-        public RequestDelegate GetRequestHandler(HttpContext httpContext, RouteData routeData)
-        {
-            throw new NotImplementedException();
-        }
-    }
-
     public class ConrollerFactory : IControllerFactory
     {
         public object CreateController(ControllerContext context)
@@ -111,5 +69,4 @@ namespace Route
             throw new NotImplementedException();
         }
     }
-
 }
