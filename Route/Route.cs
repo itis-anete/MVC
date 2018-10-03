@@ -11,26 +11,58 @@ namespace Route
 
         public Task RouteAsync(RouteContext context)
         {
-            context.Handler = new RouteHandler().GetRequestHandler(context.HttpContext, context.RouteData);
+            var url = context.HttpContext.Request.Path.Value.ToLower();
+
+            context.Handler = url.Contains("leva")
+                ? new LevaRouteHandler().GetRequestHandler(context.HttpContext, context.RouteData)
+                : url.Contains("anton")
+                    ? new AntonRouteHandler().GetRequestHandler(context.HttpContext, context.RouteData)
+                    : url.Contains("артур")
+                        ? new ArthurRouteHandler().GetRequestHandler(context.HttpContext, context.RouteData)
+                        : async httpContext =>
+                        {
+                            httpContext.Response.ContentType = "text/html;charset=utf-8";
+                            await httpContext.Response.WriteAsync("Ты кто такой?");
+                        };
+
             return Task.CompletedTask;
         }
     }
 
-    public class RouteHandler : IRouteHandler
+    public class LevaRouteHandler : IRouteHandler
+    {
+        public RequestDelegate GetRequestHandler(HttpContext httpContext, RouteData routeData)
+
+        {
+            var response = httpContext.Request.Path.Value.EndsWith("krasavchik") ? "Лёва krasavchik" : "Лёва teamleader";
+
+            httpContext.Response.ContentType = "text/html;charset=utf-8";
+
+            return async context => await context.Response.WriteAsync(response);
+        }
+    }
+
+    public class AntonRouteHandler : IRouteHandler
     {
         public RequestDelegate GetRequestHandler(HttpContext httpContext, RouteData routeData)
         {
-            var url = httpContext.Request.Path.Value.ToLower();
-            
-            var response = url.Contains("leva")
-                ? url.EndsWith("krasavchik") ? "Leva krasavchik" : "Leva teamleader"
-                : (url.Contains("anton")
-                    ? url.EndsWith("krasavchik") ? "Anton krasavchik" : "Anton backender"
-                    : (url.Contains("arthur")
-                        ? url.EndsWith("krasavchik") ? "Artur krasavchik" : "Artur frontdaun" 
-                        : "Ti kto takoi?"));
-            
-            return context => context.Response.WriteAsync(response);
+            var response = httpContext.Request.Path.Value.EndsWith("krasavchik") ? "Антон krasavchik" : "Антон backender";
+
+            httpContext.Response.ContentType = "text/html;charset=utf-8";
+
+            return async context => await context.Response.WriteAsync(response);
+        }
+    }
+
+    public class ArthurRouteHandler : IRouteHandler
+    {
+        public RequestDelegate GetRequestHandler(HttpContext httpContext, RouteData routeData)
+        {
+            var response = httpContext.Request.Path.Value.EndsWith("krasavchik") ? "Артур krasavchik" : "Артур frontdaun";
+
+            httpContext.Response.ContentType = "text/html;charset=utf-8";
+
+            return async context => await context.Response.WriteAsync(response);
         }
     }
 }

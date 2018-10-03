@@ -3,19 +3,28 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Abstractions;
 using Microsoft.AspNetCore.Mvc.Controllers;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Route
 {
     public class ConrollerFactory : IControllerFactory
     {
+        private readonly IControllerActivator _controllerActivator;
+
+        public ConrollerFactory(IControllerActivator controllerActivator)
+        {
+            _controllerActivator = controllerActivator;
+        }
+
         public object CreateController(ControllerContext context)
         {
-            throw new NotImplementedException();
+            var controller = _controllerActivator.Create(context);
+            return controller;
         }
 
         public void ReleaseController(ControllerContext context, object controller)
         {
-            throw new NotImplementedException();
+            _controllerActivator.Release(context, controller);
         }
     }
 
@@ -23,12 +32,19 @@ namespace Route
     {
         public object Create(ControllerContext context)
         {
-            throw new NotImplementedException();
+            var controllerTypeInfo = context.ActionDescriptor.ControllerTypeInfo.AsType();
+
+            var serviceProvider = context.HttpContext.RequestServices;
+
+            return ActivatorUtilities.CreateInstance(serviceProvider, controllerTypeInfo);
         }
 
         public void Release(ControllerContext context, object controller)
         {
-            throw new NotImplementedException();
+            if (controller is IDisposable disposable)
+            {
+                disposable.Dispose();
+            }
         }
     }
 
