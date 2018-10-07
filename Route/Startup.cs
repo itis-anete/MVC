@@ -30,7 +30,7 @@ namespace Route
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-
+            services.AddRouting();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
@@ -49,12 +49,26 @@ namespace Route
             app.UseStaticFiles();
             app.UseCookiePolicy();
 
-            app.UseMvc(routes =>
-            {
-                routes.MapRoute(
-                    name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
-            });
+            var control = new Controllers.Marearcat();
+            var intro = new RouteHandler(control.Intro);
+            var introBuilder = new RouteBuilder(app, intro);
+            introBuilder.MapRoute("Marearcat", "marearcat/intro");
+            var ending = new RouteHandler(control.Ending);
+            var endingBuilder = new RouteBuilder(app, ending);
+            endingBuilder.MapRoute("Marearcat", "marearcat/ending");
+            app.UseRouter(introBuilder.Build());
+            app.UseRouter(endingBuilder.Build());
+
+
+
+            //app.UseMvc(routes =>
+            //{
+
+            //    routes.MapRoute(
+            //        name: "default",
+            //        template: "{controller=Home}/{action=Index}/{id?}"
+            //        );
+            //});
         }
     }
 }
