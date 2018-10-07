@@ -13,6 +13,13 @@ namespace Route
 {
     public class RouteBuilder : IRouteBuilder
     {
+        private IApplicationBuilder app;
+
+        public RouteBuilder(IApplicationBuilder app)
+        {
+            this.app = app;
+        }
+
         public IApplicationBuilder ApplicationBuilder { get; }
 
         public IRouter DefaultHandler { get; set; }
@@ -31,18 +38,46 @@ namespace Route
     {
         public VirtualPathData GetVirtualPath(VirtualPathContext context)
         {
+            //return VirtualPathData
             throw new NotImplementedException();
         }
 
-        public Task RouteAsync(RouteContext context)
+        public async Task RouteAsync(RouteContext context)
         {
-            throw new NotImplementedException();
+            string url = context.HttpContext.Request.Path.Value.TrimEnd('/');
+            if (url.StartsWith("/User", StringComparison.OrdinalIgnoreCase))
+            {
+                await context.HttpContext.Response.WriteAsync("Hello, User!");
+            }
         }
     }
 
-    public class RouteHandler : IRouteHandler
+    public class RouteHandler : IRouteHandler, IRouter
     {
-        public RequestDelegate GetRequestHandler(HttpContext httpContext, RouteData routeData)
+        private readonly RequestDelegate _requestDelegate;
+
+        public RouteHandler(RequestDelegate requestDelegate)
+        {
+            _requestDelegate = requestDelegate;
+        }
+
+       /* public Task RouteAsync(RouteContext context)
+        {
+            context.Handler = _requestDelegate;
+            return TaskCache.CompletedTask;
+        }*/
+
+        RequestDelegate IRouteHandler.GetRequestHandler(HttpContext httpContext, RouteData routeData)
+        {
+            throw new NotImplementedException();
+        }
+
+        VirtualPathData IRouter.GetVirtualPath(VirtualPathContext context)
+        {
+            throw new NotImplementedException();
+        }
+
+        Task IRouter.RouteAsync(RouteContext context)
         {
             throw new NotImplementedException();
         }
