@@ -9,6 +9,11 @@ namespace Route.Controllers
 {
     public class Marearcat : Controller
     {
+        public async Task PassivePage(HttpContext context)
+        {
+            await context.Response.WriteAsync("Welcome!");
+        }
+
         public async Task Intro(HttpContext context)
         {
             await context.Response.WriteAsync("Hello, human!");

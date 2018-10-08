@@ -25,6 +25,20 @@ namespace Route
             Routes = new List<IRouter>();
         }
 
+
+        public RouteBuilder(IApplicationBuilder applicationBuilder, List<IRouter> first_routers)
+        {
+
+            ApplicationBuilder = applicationBuilder;
+            ServiceProvider = applicationBuilder.ApplicationServices;
+            DefaultHandler = first_routers.First();
+            Routes = new List<IRouter>();
+            foreach (IRouter rot in first_routers)
+            {
+                Routes.Add(rot);
+            }
+        }
+
         public IApplicationBuilder ApplicationBuilder { get; }
 
         public IRouter DefaultHandler { get; set; }

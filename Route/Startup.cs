@@ -49,15 +49,28 @@ namespace Route
             app.UseStaticFiles();
             app.UseCookiePolicy();
 
-            var control = new Controllers.Marearcat();
-            var intro = new RouteHandler(control.Intro);
-            var introBuilder = new RouteBuilder(app, intro);
-            introBuilder.MapRoute("Marearcat", "marearcat/intro");
-            var ending = new RouteHandler(control.Ending);
-            var endingBuilder = new RouteBuilder(app, ending);
-            endingBuilder.MapRoute("Marearcat", "marearcat/ending");
-            app.UseRouter(introBuilder.Build());
-            app.UseRouter(endingBuilder.Build());
+
+            var route_builder = new RouteBuilder(app, new Route());
+            route_builder.MapRoute("Marearcat", "{controller}/{action}");
+            app.UseRouter(route_builder.Build());
+            app.Run(async (context) =>
+            {
+                await context.Response.WriteAsync("Welcome!");
+            });
+
+
+            //var controller = new Controllers.Marearcat();
+            //RouteHandler router = new RouteHandler(controller.PassivePage);
+            //var routeBuilder = new RouteBuilder(app, router);
+            //routeBuilder.Routes.Add(new Route());
+            //routeBuilder.MapRoute("Marearcat", "{controller}/{action}");
+            //app.UseRouter(routeBuilder.Build());
+
+
+            //var ending = new RouteHandler(control.Ending);
+            //var endingBuilder = new RouteBuilder(app, ending);
+            //endingBuilder.MapRoute("Marearcat", "marearcat/ending");
+            //app.UseRouter(endingBuilder.Build());
 
 
 
