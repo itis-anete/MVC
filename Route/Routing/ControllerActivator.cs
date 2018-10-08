@@ -35,7 +35,7 @@ namespace Route
 
         public void Release(ControllerContext context, object controller)
         {
-            context.HttpContext.Response.WriteAsync("Releasing controller");
+            context.HttpContext.Response.WriteAsync("lol kek im release method in controller activator");
             if (controller is IDisposable disposable)
                 disposable.Dispose();
         }

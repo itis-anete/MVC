@@ -35,7 +35,7 @@ namespace Route
             var controller = _controllerActivator.Create(context);
             foreach (var pa in _propertyActivators)
                 pa.Activate(context, controller);
-
+            
             return controller;
         }
 

@@ -8,11 +8,12 @@ using Route.Models;
 
 namespace Route.Controllers
 {
+    // [ActionFilterAttribute]
     public class HomeController : Controller
     {
-        public IActionResult Index()
+        public IActionResult Index([FromBody] int nigga)
         {
-            return View();
+            return !ModelState.IsValid ? Error() : View();
         }
 
         public IActionResult About()
