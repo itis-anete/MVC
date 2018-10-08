@@ -48,6 +48,7 @@ namespace Route
 
             app.UseStaticFiles();
             app.UseCookiePolicy();
+            app.UseRouting();
 
             app.UseMvc(routes =>
             {
