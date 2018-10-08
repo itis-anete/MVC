@@ -38,7 +38,6 @@ namespace Route
     {
         public VirtualPathData GetVirtualPath(VirtualPathContext context)
         {
-            //return VirtualPathData
             throw new NotImplementedException();
         }
 
