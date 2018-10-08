@@ -1,26 +1,37 @@
-﻿using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Abstractions;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Controllers;
-using Microsoft.AspNetCore.Routing;
+using Microsoft.AspNetCore.Mvc.Internal;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Route
 {
     public class ControllerActivator : IControllerActivator
     {
-        public object Create(ControllerContext context)
+        private readonly ITypeActivatorCache typeActivatorCache;
+
+        public ControllerActivator(ITypeActivatorCache typeActivatorCache)
         {
-            throw new NotImplementedException();
+            this.typeActivatorCache = typeActivatorCache ?? throw new ArgumentNullException();
+        }
+
+        public object Create(ControllerContext controllerContext)
+        {
+            if (controllerContext == null) throw new ArgumentNullException();
+            if (controllerContext.ActionDescriptor == null) throw new ArgumentException();
+
+            var controllerTypeInfo = controllerContext.ActionDescriptor.ControllerTypeInfo;
+            if (controllerTypeInfo == null) throw new ArgumentException();
+
+            var serviceProvider = controllerContext.HttpContext.RequestServices;
+            return typeActivatorCache.CreateInstance<object>(serviceProvider, controllerTypeInfo.AsType());
         }
 
         public void Release(ControllerContext context, object controller)
         {
-            throw new NotImplementedException();
+            if (context == null) throw new ArgumentNullException();
+            if (controller == null) throw new ArgumentNullException();
+            
+            if (controller is IDisposable disposable) disposable.Dispose();
         }
     }
 }
