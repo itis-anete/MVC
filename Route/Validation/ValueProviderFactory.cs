@@ -8,7 +8,8 @@ namespace Route.Validation
     {
         public Task CreateValueProviderAsync(ValueProviderFactoryContext context)
         {
-            return Task.Run(() => context.ValueProviders.Add(new ValueProvider()));
+            context.ValueProviders.Add(new ValueProvider());
+            return Task.CompletedTask;
         }
     }
 }

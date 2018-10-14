@@ -20,7 +20,7 @@ namespace Route.Routing
 
         public IServiceProvider ServiceProvider { get; }
 
-        public IList<IRouter> Routes { get; }
+        public IList<IRouter> Routes { get; } = new List<IRouter>();
 
         public IRouter Build()
         {

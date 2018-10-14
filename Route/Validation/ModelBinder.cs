@@ -8,7 +8,8 @@ namespace Route.Validation
     {
         public Task BindModelAsync(ModelBindingContext bindingContext)
         {
-            throw new NotImplementedException();
+            bindingContext.Result = ModelBindingResult.Success(bindingContext.ValueProvider.GetValue("balls"));
+            return Task.CompletedTask;
         }
     }
 }
