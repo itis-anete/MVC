@@ -29,8 +29,6 @@ namespace Route
 
     public class ROuter : IRouter
     {
-        private object _router;
-
         public VirtualPathData GetVirtualPath(VirtualPathContext context)
         {
             throw new NotImplementedException();
@@ -39,7 +37,7 @@ namespace Route
         public Task RouteAsync(RouteContext context)
         {
             string url = context.HttpContext.Request.Path.Value.TrimEnd('/');
-            if (url.StartsWith("/Smth", StringComparison.OrdinalIgnoreCase))
+            if (url.StartsWith("/Smth", StringComparison.OrdinalIgnoreCase))                                                        
             {
                 context.Handler = async ctx =>
                 {
@@ -52,13 +50,7 @@ namespace Route
              * В качестве параметра в RouteAsync передается объект RouteContext, через который мы можем 
              * получить доступ к данным запроса. В частности, здесь мы смотрим на первый сегмент строки 
              * запроса - если он начинается со строки "/Smth", то устанавливается обработчик маршрута, 
-             * который отправляет в качестве ответа сообщение "Hello User!!!".*/
-
-        }
-
-        private object GetPages()
-        {
-            throw new NotImplementedException();
+             * который отправляет в качестве ответа сообщение "Hello User!!!".*/    
         }
     }
 
@@ -133,5 +125,4 @@ namespace Route
             throw new NotImplementedException();
         }
     }
-
 }
