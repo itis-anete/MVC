@@ -32,8 +32,11 @@ namespace Route
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
+
+            var desctriptor = new ServiceDescriptor(typeof(IControllerFactory), typeof(ControllerFactory), ServiceLifetime.Singleton);
+            services.Replace(desctriptor);
             
-            services.AddSingleton<IControllerFactory>(new ControllerFactory(new ControllerActivator(new TypeActivatorCache()))); // topkek
+            //services.AddSingleton<IControllerFactory>(new ControllerFactory(new ControllerActivator(new TypeActivatorCache())));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 

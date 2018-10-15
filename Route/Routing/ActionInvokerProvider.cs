@@ -17,7 +17,6 @@ namespace Route
 {
     public class ActionInvokerProvider : IActionInvokerProvider
     {
-
         public int Order { get; }
 
         private InnerCache CurrentCache
@@ -40,7 +39,6 @@ namespace Route
         private readonly IPageFactoryProvider _pageFactoryProvider;
         private readonly IPageModelFactoryProvider _modelFactoryProvider;
         private readonly IModelBinderFactory _modelBinderFactory;
-        private readonly IActionDescriptorCollectionProvider _collectionProvider;
         private readonly IFilterProvider[] _filterProviders;
         private readonly IReadOnlyList<IValueProviderFactory> _valueProviderFactories;
         private readonly ParameterBinder _parameterBinder;
@@ -51,6 +49,7 @@ namespace Route
         private readonly DiagnosticSource _diagnosticSource;
         private readonly ILogger<PageActionInvoker> _logger;
         private readonly IActionResultTypeMapper _mapper;
+        private readonly IActionDescriptorCollectionProvider _collectionProvider;
         private volatile InnerCache _currentCache;
 
         public void OnProvidersExecuting(ActionInvokerProviderContext context)

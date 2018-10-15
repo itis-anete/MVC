@@ -13,7 +13,8 @@ namespace Route
     {
         public Task BindModelAsync(ModelBindingContext bindingContext)
         {
-            throw new NotImplementedException();
+            bindingContext.Result = ModelBindingResult.Success(bindingContext.ValueProvider.GetValue("d4n0n"));
+            return Task.CompletedTask;
         }
 
         [AttributeUsage(AttributeTargets.All, Inherited = false, AllowMultiple = true)]
