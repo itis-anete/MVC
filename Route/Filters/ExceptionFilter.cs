@@ -1,14 +1,13 @@
 using System;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace Route
 {
-    public class ExceptionFilter : Attribute, IAsyncExceptionFilter, IExceptionFilter, IOrderedFilter
+    public class ExceptionFilter : ExceptionFilterAttribute, IAsyncExceptionFilter, IExceptionFilter, IOrderedFilter
     {
-        public int Order { get; } = 0;
-        
-        public Task OnExceptionAsync(ExceptionContext context)
+        public new Task OnExceptionAsync(ExceptionContext context)
         {
             if (context == null)
             {
@@ -19,8 +18,9 @@ namespace Route
             return Task.CompletedTask;
         }
 
-        public void OnException(ExceptionContext context)
+        public new void OnException(ExceptionContext context)
         {
+            context.HttpContext.Response.WriteAsync(context.Exception.Message);
         }
     }
 }

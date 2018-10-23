@@ -1,15 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Route.Models;
-using Newtonsoft.Json;
+using Route.Filters;
 
 namespace Route.Controllers
 {
-    // [ActionFilterAttribute]
+    [ActionFilter]
     public class HomeController : Controller, IInfoSystemController
     {
         public IActionResult Index() //[FromBody] int param)
@@ -18,7 +16,6 @@ namespace Route.Controllers
             return View();
         }
 
-        [HttpGet]
         public IActionResult About()
         {
             ViewData["Message"] = "Your application description page.";
@@ -40,13 +37,6 @@ namespace Route.Controllers
             });
         }
 
-        /*public InfoSystemActionResult Contact()
-        {
-            ViewData["Message"] = "Your contact page.";
-
-            return new InfoSystemActionResult();
-        }*/
-
         public IActionResult Privacy()
         {
             return View();
@@ -61,23 +51,21 @@ namespace Route.Controllers
             });
         }
 
-        [HttpGet]
         public IActionResult Test(
-            [FromInfoSystemSpec] int x,    // привязывается
-                                 string y) // не привязывается)
+            [FromInfoSystemSpec] int x, // привязывается
+            string y) // не привязывается)
         {
             throw new NotImplementedException();
         }
 
-        [HttpPost]
-        public IActionResult Test2([FromInfoSystemSpec] InfoSystemValue a)
+        public IActionResult Test2(int a)
         {
             return new JsonResult(new {Title = "title"});
         }
 
-        public InfoSystemActionResult Contact()
+        public IActionResult Contact()
         {
-            return new InfoSystemActionResult();
+            return View();
         }
     }
 }

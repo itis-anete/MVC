@@ -1,19 +1,19 @@
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace Route.Filters
 {
-    public class ResultFilter : IResultFilter
+    public class ResultFilter : ResultFilterAttribute, IResultFilter
     {
-        public void OnResultExecuting(ResultExecutingContext context)
+        public new void OnResultExecuting(ResultExecutingContext context)
         {
-            //context.HttpContext.Response
-            throw new System.NotImplementedException();
             // HtmlAgilityPack - optional
+            context.HttpContext.Response.WriteAsync("Result Filter");
         }
 
-        public void OnResultExecuted(ResultExecutedContext context)
+        public new void OnResultExecuted(ResultExecutedContext context)
         {
-            throw new System.NotImplementedException();
+            context.HttpContext.Response.WriteAsync(context.Result.ToString());
         }
     }
 }

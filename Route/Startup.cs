@@ -1,18 +1,28 @@
 ﻿using System;
+using System.Buffers;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Diagnostics;
+using System.Text.Encodings.Web;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Hosting.Internal;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Controllers;
-using Microsoft.AspNetCore.Mvc.Internal;
+using Microsoft.AspNetCore.Mvc.ApplicationParts;
+using Microsoft.AspNetCore.Mvc.Formatters;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.Razor;
-using Microsoft.AspNetCore.Mvc.ViewEngines;
+using Microsoft.AspNetCore.Mvc.Razor.Internal;
+using Microsoft.AspNetCore.Mvc.Routing;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
+using Microsoft.AspNetCore.Mvc.ViewFeatures.Internal;
+using Microsoft.AspNetCore.Razor.Language;
+using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
+using Newtonsoft.Json;
 
 namespace Route
 {
@@ -25,27 +35,24 @@ namespace Route
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.Configure<CookiePolicyOptions>(options =>
             {
-                // This lambda determines whether user consent for non-essential cookies is needed for a given request.
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
             
-            // TODO 
-            services.Replace(new ServiceDescriptor(typeof(RazorViewEngine), typeof(InfoSystemViewEngine),
-                ServiceLifetime.Singleton));
-            services.Replace(new ServiceDescriptor(typeof(ViewEngineResult), typeof(InfoSystemViewEngineResult),
-                ServiceLifetime.Singleton));
-            services.Replace(new ServiceDescriptor(typeof(RazorView), typeof(InfoSystemView), 
-                ServiceLifetime.Singleton));
-            
-            
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddSingleton<IRazorViewEngine, InfoSystemViewEngine>();
+            /*services.AddSingleton<IRouteBuilder, RouteBuilder>();
+            services.AddSingleton<IRouter, Router>();
+            services.AddSingleton<IRouteHandler, RouteHandler>();*/
             
+            services.Configure<MvcViewOptions>(options =>
+            {
+                var x = options.ViewEngines;
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -62,12 +69,12 @@ namespace Route
 
             app.UseStaticFiles();
             app.UseCookiePolicy();
-
+            
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "InfoSystem_{controller=Home}Controller/{method=GET}/{action=Index}/{id?}");
+                    template: "InfoSystem_{controller=Home}Controller/{action=Index}/{id?}");
             });
         }
     }

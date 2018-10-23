@@ -1,11 +1,5 @@
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
-using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
-using Newtonsoft.Json;
 
 namespace Route
 {
@@ -17,14 +11,13 @@ namespace Route
             return Task.CompletedTask;
         }
 
-        [AttributeUsage(AttributeTargets.All, Inherited = false, AllowMultiple = true)]
+        /*[AttributeUsage(AttributeTargets.All, Inherited = false, AllowMultiple = true)]
         sealed class CellPhoneValidateAttribute : Attribute, IPropertyValidationFilter
         {
             // See the attribute guidelines at 
             //  http://go.microsoft.com/fwlink/?LinkId=85236
             public CellPhoneValidateAttribute()
             {
-                // TODO: Implement code here
                 throw new NotImplementedException();
             }
 
@@ -43,7 +36,7 @@ namespace Route
             {
                 throw new NotImplementedException();
             }
-        }
+        }*/
         
     }
 }
