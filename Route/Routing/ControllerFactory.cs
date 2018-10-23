@@ -41,7 +41,7 @@ namespace Route
 
         public void ReleaseController(ControllerContext context, object controller)
         {
-            _controllerActivator.Release(context, controller);
+            //_controllerActivator.Release(context, controller);
         }
     }
 }

@@ -4,13 +4,12 @@ using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace Route.Filters
 {
-    public class ActionFilter : Attribute,
-        IActionFilter,
-        IAsyncActionFilter,
-        IResultFilter,
-        IAsyncResultFilter,
-        IOrderedFilter
+    public class ActionFilter : Attribute, IActionFilter
     {
+        // время запроса можно получить в роутере (маршрутизации)
+        // сравнивать время сейчас - время начала запроса 
+        // оптимальное время задержки - если больше 60мс => отказ в Response (не слать http ошибки, текстом)
+        
         public int Order { get; } = 0;
 
         public void OnActionExecuting(ActionExecutingContext context)

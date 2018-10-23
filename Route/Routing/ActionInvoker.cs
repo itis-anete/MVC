@@ -32,12 +32,7 @@ namespace Route
             : base(diagnosticSource, logger, mapper, controllerContext, filters,
                 controllerContext.ValueProviderFactories)
         {
-            if (cacheEntry == null)
-            {
-                throw new ArgumentNullException(nameof(cacheEntry));
-            }
-
-            _cacheEntry = cacheEntry;
+            _cacheEntry = cacheEntry ?? throw new ArgumentNullException(nameof(cacheEntry));
             _controllerContext = controllerContext;
         }
 
@@ -46,9 +41,9 @@ namespace Route
 
         protected override void ReleaseResources()
         {
-            if (_instance != null && _cacheEntry.ControllerReleaser != null)
+            if (_instance != null)
             {
-                _cacheEntry.ControllerReleaser(_controllerContext, _instance);
+                _cacheEntry.ControllerReleaser?.Invoke(_controllerContext, _instance);
             }
         }
 

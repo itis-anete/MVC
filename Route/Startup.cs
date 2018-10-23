@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc.Internal;
+using Microsoft.AspNetCore.Mvc.Razor;
+using Microsoft.AspNetCore.Mvc.ViewEngines;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -32,12 +34,18 @@ namespace Route
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
-
-            var desctriptor = new ServiceDescriptor(typeof(IControllerFactory), typeof(ControllerFactory), ServiceLifetime.Singleton);
-            services.Replace(desctriptor);
             
-            //services.AddSingleton<IControllerFactory>(new ControllerFactory(new ControllerActivator(new TypeActivatorCache())));
+            // TODO 
+            services.Replace(new ServiceDescriptor(typeof(RazorViewEngine), typeof(InfoSystemViewEngine),
+                ServiceLifetime.Singleton));
+            services.Replace(new ServiceDescriptor(typeof(ViewEngineResult), typeof(InfoSystemViewEngineResult),
+                ServiceLifetime.Singleton));
+            services.Replace(new ServiceDescriptor(typeof(RazorView), typeof(InfoSystemView), 
+                ServiceLifetime.Singleton));
+            
+            
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -49,7 +57,7 @@ namespace Route
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
+                app.UseExceptionHandler("/InfoSystem_HomeController/Error");
             }
 
             app.UseStaticFiles();
@@ -59,7 +67,7 @@ namespace Route
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    template: "InfoSystem_{controller=Home}Controller/{method=GET}/{action=Index}/{id?}");
             });
         }
     }

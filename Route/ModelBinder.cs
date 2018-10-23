@@ -31,8 +31,6 @@ namespace Route
             public bool ShouldValidateEntry(ValidationEntry entry, ValidationEntry parentEntry)
             {
                 //EmailAddressAttribute
-                
-                
                 throw new NotImplementedException();
             }
         }

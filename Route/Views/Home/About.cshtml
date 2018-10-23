@@ -1,7 +1,17 @@
-﻿@{
+﻿@model ViewModel
+@{
     ViewData["Title"] = "About";
 }
+@addTagHelper Route.ServerUl, Route
 <h2>@ViewData["Title"]</h2>
 <h3>@ViewData["Message"]</h3>
-
+<h1>App</h1>
+<div>@*
+    <h2>@ViewData["Page Title"]</h2>
+    @ViewData["Object"];
+    @ViewBag.PageTitle
+    @Html.HiddenFor(x=>x.Name)
+@Html.ListFor(Model.Options, x=>x.Value.ToString())*@
+    <server-ul value="123"></server-ul>
+</div>
 <p>Use this area to provide additional information.</p>
