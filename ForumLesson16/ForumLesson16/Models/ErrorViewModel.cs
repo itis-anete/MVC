@@ -1,6 +1,6 @@
 using System;
 
-namespace Route.Models
+namespace ForumLesson16.Models
 {
     public class ErrorViewModel
     {

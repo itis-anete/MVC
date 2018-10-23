@@ -4,9 +4,9 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Route.Models;
+using ForumLesson16.Models;
 
-namespace Route.Controllers
+namespace ForumLesson16.Controllers
 {
     public class HomeController : Controller
     {
