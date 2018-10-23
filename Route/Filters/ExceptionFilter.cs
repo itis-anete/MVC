@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc.Filters;
 using System;
 
-namespace Route.Filters
+namespace Cannabis.Filters
 {
     public class ExceptionFilter : FilterAttribute, IExceptionFilter
     {

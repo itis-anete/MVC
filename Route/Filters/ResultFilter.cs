@@ -3,14 +3,14 @@ using System;
 
 namespace Cannabis.Filters
 {
-    public class ActionFilter : IActionFilter
+    public class ResultFilter : IResultFilter
     {
-        public void OnActionExecuted(ActionExecutedContext context)
+        public void OnResultExecuted(ResultExecutedContext context)
         {
             throw new NotImplementedException();
         }
 
-        public void OnActionExecuting(ActionExecutingContext context)
+        public void OnResultExecuting(ResultExecutingContext context)
         {
             throw new NotImplementedException();
         }
