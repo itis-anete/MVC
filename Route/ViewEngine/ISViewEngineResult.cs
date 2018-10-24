@@ -6,6 +6,10 @@ namespace Route
 {
     public class InfoSystemViewEngineResult
     {
+        private InfoSystemViewEngineResult()
+        {
+        }
+
         public IEnumerable<string> SearchedLocations { get; private set; }
         public IView View { get; private set; }
         public string ViewName { get; private set; }
