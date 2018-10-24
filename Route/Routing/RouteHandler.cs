@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 
@@ -22,9 +23,11 @@ namespace Route
                 return _requestDelegate;
 
             var path = httpContext.Request.Path.Value.ToLower();
-            httpContext.Response.WriteAsync(path);
-            return async newHttpContext =>
-                await newHttpContext.Response.WriteAsync("alr, i'm a RouteHandler and i got you!");
+            return newHttpContext =>
+            {
+                //newHttpContext.Response.Redirect(path);
+                return Task.CompletedTask;
+            };
         }
     }
 }

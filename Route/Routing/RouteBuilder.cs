@@ -35,9 +35,7 @@ namespace Route
             var rc = new RouteCollection();
 
             foreach (var route in Routes)
-            {
                 rc.Add(route);
-            }
 
             return rc;
         }

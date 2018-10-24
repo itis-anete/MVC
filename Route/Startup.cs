@@ -3,6 +3,7 @@ using System.Buffers;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text.Encodings.Web;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Hosting.Internal;
@@ -45,9 +46,6 @@ namespace Route
             
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddSingleton<IRazorViewEngine, InfoSystemViewEngine>();
-            /*services.AddSingleton<IRouteBuilder, RouteBuilder>();
-            services.AddSingleton<IRouter, Router>();
-            services.AddSingleton<IRouteHandler, RouteHandler>();*/
             
             services.Configure<MvcViewOptions>(options =>
             {
@@ -55,9 +53,13 @@ namespace Route
             });
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            var myRouter = new Router();
+            var routeBuilder = new RouteBuilder(app, myRouter);
+            //routeBuilder.MapRoute("default", "InfoSystem_{controller}Controller/{action}");
+            app.UseRouter(routeBuilder.Build());
+            
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
