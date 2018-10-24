@@ -12,4 +12,9 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Include="Views\InfoSystem\.DS_Store" />
+    <Content Include="Views\InfoSystem\Home\.DS_Store" />
+  </ItemGroup>
+
 </Project>
