@@ -7,5 +7,8 @@ namespace Cannabis.Models
 {
     public class CannabisModel : CannabisValue
     {
+        public CannabisModel(object value) : base(value)
+        {
+        }
     }
 }
