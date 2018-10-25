@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Route.Filters;
 using Route.Models;
+using Route.Actions;
 
 namespace Route.Controllers
 {
@@ -42,6 +43,11 @@ namespace Route.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        public TitleActionResult HelloWorld()
+        {
+            return new TitleActionResult(View());
         }
     }
 }
