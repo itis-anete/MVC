@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Route.Filters;
 using Route.Models;
 
 namespace Route.Controllers
@@ -14,16 +15,18 @@ namespace Route.Controllers
         {
             return View();
         }
-
+        [HtmlFilterResult]
         public IActionResult About()
         {
             ViewData["Message"] = "Your application description page.";
 
             return View();
         }
-
+        [ReverseExceptionFilter]
         public IActionResult Contact()
         {
+            int y = 0;
+            int x = 5 / y;
             ViewData["Message"] = "Your contact page.";
 
             return View();
