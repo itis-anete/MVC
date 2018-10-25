@@ -12,7 +12,7 @@ namespace Route.Controllers
 {
     public class HomeController : Controller
     {
-        [DelayActionFilter]
+        [HtmlFilterResult]
         public IActionResult Index()
         {
             return View();
