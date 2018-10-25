@@ -11,12 +11,13 @@ namespace Route.Filters
     {
         public void OnActionExecuted(ActionExecutedContext context)
         {
-            Program.GetProp().Value = DateTime.Now;
+            
         }
 
         public void OnActionExecuting(ActionExecutingContext context)
         {
-            if ((DateTime.Now - Program.GetProp().Value).TotalMilliseconds > 60)
+            double date = (DateTime.Now - Program.GetProp().Value).TotalMilliseconds;
+            if (date > 60)
                 context.Result = new ContentResult { Content = "Слишком большая задержка" };
         }
     }

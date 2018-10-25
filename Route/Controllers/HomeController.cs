@@ -11,6 +11,7 @@ namespace Route.Controllers
 {
     public class HomeController : Controller
     {
+        [DelayActionFilter]
         public IActionResult Index()
         {
             return View();
