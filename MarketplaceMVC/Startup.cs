@@ -6,9 +6,10 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Controllers;
+using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.Extensions.DependencyInjection.Extensions; 
 
 namespace MarketplaceMVC
 {
@@ -37,6 +38,13 @@ namespace MarketplaceMVC
             });
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
+            services.AddSingleton<IRazorViewEngine, MarketplaceMVC.NewViewEngine.CustomViewEngine>();
+
+            services.Configure<MvcViewOptions>(options =>
+            {
+                var x = options.ViewEngines;
+            });
 
             services.Replace(ServiceDescriptor.Singleton<IControllerFactory, ControllerFactory>());
         }

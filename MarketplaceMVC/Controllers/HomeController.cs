@@ -83,5 +83,9 @@ namespace MarketplaceMVC.Controllers
             return new MarketplaceActionResult(View(Leva));
         }
 
+        public IActionResult TrueDirect()
+        {
+            return View();
+        }
     }
 }
