@@ -7,6 +7,7 @@ namespace Route
 {
     public static class CustomHtmlHelpers
     {
+        //написан на паре
         public static IHtmlContent ListFor<TModel, TListItem>(this IHtmlHelper<TModel> helper,
             IEnumerable<TListItem> list, Func<TListItem, string> converter)
         {
