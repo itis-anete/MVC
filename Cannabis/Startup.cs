@@ -3,10 +3,10 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Internal;
+using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.AspNetCore.Routing;
-using Microsoft.AspNetCore.Mvc.Internal;
 
 namespace Cannabis
 {
@@ -53,7 +53,7 @@ namespace Cannabis
                 routes.Routes.Add(
                     new Router(
                         new ActionInvokerFactory(new[] { new ActionInvokerProvider() }),
-                        new Routing.ActionSelector()));
+                        new Routing.ActionSelector(new Routing.ControllerActionDescriptorProvider())));
             });
         }
     }

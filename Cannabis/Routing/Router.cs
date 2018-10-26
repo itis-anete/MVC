@@ -38,7 +38,10 @@ namespace Cannabis.Routing
 
             context.Handler = httpContext =>
             {
-                var actionContext = new ActionContext(context.HttpContext, httpContext.GetRouteData(), actionDescriptor);
+                var actionContext = new ActionContext(
+                    context.HttpContext,
+                    httpContext.GetRouteData(),
+                    actionDescriptor);
                 var invoker = _actionInvokerFactory.CreateInvoker(actionContext);
                 if (invoker == null)
                     throw new InvalidOperationException("Can not create action invoker");

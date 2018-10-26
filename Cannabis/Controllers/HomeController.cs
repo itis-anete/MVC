@@ -5,7 +5,7 @@ using Route.Models;
 
 namespace Cannabis.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : Controller, ICannabisController
     {
         public IActionResult Index()
         {
@@ -18,14 +18,14 @@ namespace Cannabis.Controllers
 
             return View();
         }
-
+        
         public IActionResult Contact()
         {
             ViewData["Message"] = "Your contact page.";
 
             return View();
         }
-
+        
         public IActionResult Privacy()
         {
             return View();

@@ -36,6 +36,8 @@ namespace Cannabis.Models
 
         public CannabisValue(string value)
         {
+            if (value == null)
+                throw new ArgumentNullException(nameof(value));
             _stringValue = value.Cast<short>().ToArray();
             TypeOfValue = value.GetType();
         }
@@ -43,13 +45,13 @@ namespace Cannabis.Models
         public CannabisValue(object value)
         {
             _objectValue = value;
-            TypeOfValue = value.GetType();
+            TypeOfValue = value?.GetType();
         }
 
         public CannabisValue(Type value)
         {
             _typeValue = value;
-            TypeOfValue = value.GetType();
+            TypeOfValue = value?.GetType();
         }
 
         private readonly char _boolValue;
