@@ -16,6 +16,8 @@ namespace MarketplaceMVC.Controllers
             CallCounter++;
         }
 
+        public MarketplaceValue Name { get; set; } 
+
         [HtmlFilterResult]
         public IActionResult Index()
         {
@@ -69,7 +71,9 @@ namespace MarketplaceMVC.Controllers
         {
             ViewData["CallCounter"] = CallCounter;
 
-            return new TitleActionResult(View());
+            Name = new MarketplaceValue(new {Kek = 1});
+
+            return new TitleActionResult(View(Name));
         }
 
     }
