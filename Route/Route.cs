@@ -22,7 +22,8 @@ namespace Route
                         : async httpContext =>
                         {
                             httpContext.Response.ContentType = "text/html;charset=utf-8";
-                            await httpContext.Response.WriteAsync("Ты кто такой?");
+                            httpContext.Response.Redirect("/Marketplace_HomeController/IndexAction");
+                            await Task.CompletedTask;
                         };
 
             return Task.CompletedTask;

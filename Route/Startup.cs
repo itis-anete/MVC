@@ -66,7 +66,7 @@ namespace Route
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    template: "Marketplace_{controller=Home}Controller/{action=Index}Action/{id?}");
 
                 routes.Routes.Add(new Router());
             });
