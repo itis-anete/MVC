@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc.Controllers;
 using System;
 
-namespace Route.Routing
+namespace Cannabis.Routing
 {
     public class ConrollerFactory : IControllerFactory
     {

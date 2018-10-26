@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace Cannabis.Controllers
+﻿namespace Cannabis.Controllers
 {
-    public interface ICannabisController
-    {
-    }
+    public interface ICannabisController { }
 }

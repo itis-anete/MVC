@@ -1,19 +1,19 @@
 ﻿using Microsoft.AspNetCore.Mvc.Abstractions;
 using System;
 
-namespace Route.Routing
+namespace Cannabis.Routing
 {
     public class ActionInvokerProvider : IActionInvokerProvider
     {
-        public int Order => throw new NotImplementedException();
+        public int Order => 1;
 
         public void OnProvidersExecuted(ActionInvokerProviderContext context)
         {
-            throw new NotImplementedException();
         }
 
         public void OnProvidersExecuting(ActionInvokerProviderContext context)
         {
+            context.Result = null;
             throw new NotImplementedException();
         }
     }

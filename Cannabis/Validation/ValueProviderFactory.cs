@@ -2,7 +2,7 @@
 using System;
 using System.Threading.Tasks;
 
-namespace Route.Validation
+namespace Cannabis.Validation
 {
     public class ValueProviderFactory : IValueProviderFactory
     {

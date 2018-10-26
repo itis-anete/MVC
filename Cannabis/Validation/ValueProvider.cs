@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
 
-namespace Route.Validation
+namespace Cannabis.Validation
 {
     public class ValueProvider : IValueProvider
     {

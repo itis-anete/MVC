@@ -1,9 +1,12 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using Cannabis.Routing;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.Routing;
+using Microsoft.AspNetCore.Mvc.Internal;
 
 namespace Cannabis
 {
@@ -26,7 +29,6 @@ namespace Cannabis
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
@@ -34,13 +36,9 @@ namespace Cannabis
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment())
-            {
                 app.UseDeveloperExceptionPage();
-            }
             else
-            {
                 app.UseExceptionHandler("/Home/Error");
-            }
 
             app.UseStaticFiles();
             app.UseCookiePolicy();
@@ -49,7 +47,13 @@ namespace Cannabis
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    template: "",
+                    defaults: new { controller = "Home", action = "Index" });
+
+                routes.Routes.Add(
+                    new Router(
+                        new ActionInvokerFactory(new[] { new ActionInvokerProvider() }),
+                        new Routing.ActionSelector()));
             });
         }
     }

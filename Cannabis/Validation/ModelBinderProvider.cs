@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System;
 
-namespace Route.Validation
+namespace Cannabis.Validation
 {
     public class ModelBinderProvider : IModelBinderProvider
     {

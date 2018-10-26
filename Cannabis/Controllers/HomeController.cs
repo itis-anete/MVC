@@ -5,8 +5,6 @@ using Route.Models;
 
 namespace Cannabis.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
     public class HomeController : Controller
     {
         public IActionResult Index()
