@@ -10,7 +10,13 @@ namespace Cannabis.Models
         {
             get
             {
-                throw new NotImplementedException();
+                if (TypeOfValue == typeof(bool))
+                    return _boolValue == 'f' ? true : false;
+                if (TypeOfValue == typeof(int))
+                    return (int)_intValue;
+                if (TypeOfValue == typeof(string))
+                    return new string(_stringValue.Cast<char>().ToArray());
+                return _objectValue;
             }
         }
 
