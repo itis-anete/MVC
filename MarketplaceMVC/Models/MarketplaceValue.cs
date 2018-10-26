@@ -53,5 +53,10 @@ namespace MarketplaceMVC.Models
             ObjectValue = value;
             TypeOfValue = value.GetType();
         }
+
+        public override string ToString()
+        {
+            return Value.ToString();
+        }
     }
 }

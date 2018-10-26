@@ -1,0 +1,12 @@
+﻿@model MarketplaceValue
+@{
+    ViewData["Title"] = "Marketplace";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<marketplace link="https://github.com/itis-anete/Marketplace"></marketplace>
+
+@Html.MarketplaceButton(@Model)
+
+<h2>@Model.Value</h2>

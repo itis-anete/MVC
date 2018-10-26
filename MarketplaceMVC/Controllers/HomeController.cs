@@ -16,14 +16,18 @@ namespace MarketplaceMVC.Controllers
             CallCounter++;
         }
 
-        public MarketplaceValue Name { get; set; } 
+        public MarketplaceValue Name { get; set; }
+        public MarketplaceValue Age { get; set; }
+        public MarketplaceValue Address { get; set; }
+        public MarketplaceValue IsStudent { get; set; }
+        public MarketplaceValue Leva { get; set; }
 
         [HtmlFilterResult]
         public IActionResult Index()
         {
             ViewData["CallCounter"] = CallCounter;
 
-            return View();
+            return new MarketplaceActionResult(View(Name));
 
         }
 
@@ -32,7 +36,7 @@ namespace MarketplaceMVC.Controllers
         {
             ViewData["CallCounter"] = CallCounter;
 
-            return View();
+            return new MarketplaceActionResult(View(Name));
         }
 
         [ReverseExceptionFilter]
@@ -50,15 +54,14 @@ namespace MarketplaceMVC.Controllers
                 throw new DivideByZeroException();
             }
 
-
-            return View();
+            return new MarketplaceActionResult(View(Name));
         }
 
         public IActionResult Privacy()
         {
             ViewData["CallCounter"] = CallCounter;
 
-            return View();
+            return new MarketplaceActionResult(View(Name));
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
@@ -67,13 +70,17 @@ namespace MarketplaceMVC.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-        public TitleActionResult HelloWorld()
+        public MarketplaceActionResult Marketplace()
         {
             ViewData["CallCounter"] = CallCounter;
 
-            Name = new MarketplaceValue(new {Kek = 1});
+            Name = new MarketplaceValue("Leva");
+            Age = new MarketplaceValue(20);
+            IsStudent = new MarketplaceValue(true);
+            Address = new MarketplaceValue(new {City = "Kazan", Street = "Zilantovskaya", House = 18, Flat = 25});
+            Leva = new MarketplaceValue(new {Name, Age, Address, IsStudent});
 
-            return new TitleActionResult(View(Name));
+            return new MarketplaceActionResult(View(Leva));
         }
 
     }

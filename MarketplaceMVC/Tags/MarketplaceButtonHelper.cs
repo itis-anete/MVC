@@ -4,9 +4,9 @@ using MarketplaceMVC.Models;
 
 namespace MarketplaceMVC.Tags
 {
-    public static class TypeButtonHelper
+    public static class MarketplaceButtonHelper
     {
-        public static HtmlString TypeButton(this IHtmlHelper html, MarketplaceValue value)
+        public static HtmlString MarketplaceButton(this IHtmlHelper html, MarketplaceValue value)
         {
             var result = "<button>";
             result += value.TypeOfValue;
