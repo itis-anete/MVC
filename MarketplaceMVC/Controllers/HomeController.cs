@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using MarketplaceMVC.Actions;
 using MarketplaceMVC.Filters;
 using MarketplaceMVC.Models;
@@ -18,14 +19,15 @@ namespace MarketplaceMVC.Controllers
         [HtmlFilterResult]
         public IActionResult Index()
         {
+            ViewData["CallCounter"] = CallCounter;
+
             return View();
+
         }
 
         [HtmlFilterResult]
         public IActionResult About()
         {
-            ViewData["Message"] = "Your application description page.";
-
             ViewData["CallCounter"] = CallCounter;
 
             return View();
@@ -34,15 +36,26 @@ namespace MarketplaceMVC.Controllers
         [ReverseExceptionFilter]
         public IActionResult Contact()
         {
-            var y = 0;
-            var x = 5 / y;
-            ViewData["Message"] = "Your contact page.";
+            ViewData["CallCounter"] = CallCounter;
+
+            try
+            {
+                var y = 0;
+                var x = 5 / y;
+            }
+            catch
+            {
+                throw new DivideByZeroException();
+            }
+
 
             return View();
         }
 
         public IActionResult Privacy()
         {
+            ViewData["CallCounter"] = CallCounter;
+
             return View();
         }
 
@@ -54,6 +67,8 @@ namespace MarketplaceMVC.Controllers
 
         public TitleActionResult HelloWorld()
         {
+            ViewData["CallCounter"] = CallCounter;
+
             return new TitleActionResult(View());
         }
 
