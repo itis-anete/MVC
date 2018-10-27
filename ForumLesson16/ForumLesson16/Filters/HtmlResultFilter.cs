@@ -6,17 +6,15 @@ using System.Threading.Tasks;
 
 namespace ForumLesson16
 {
-    public class TimeFilterAttribute : IActionFilter
+    public class HtmlResultFilter : IResultFilter
     {
-        public void OnActionExecuted(ActionExecutedContext context)
+        public void OnResultExecuted(ResultExecutedContext context)
         {
-            //timer start
             throw new NotImplementedException();
         }
 
-        public void OnActionExecuting(ActionExecutingContext context)
+        public void OnResultExecuting(ResultExecutingContext context)
         {
-            //finish
             throw new NotImplementedException();
         }
     }

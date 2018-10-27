@@ -9,16 +9,11 @@ namespace ForumLesson16
 {
     public class HomeForumController : ForumControllerBase, IHomeForumController
     {
-        public override void OnActionExecuting(ActionExecutingContext context)
-        {
-            //context -> IDictionary<string, object> ActionArguments
-            base.OnActionExecuting(context);
-        }
-
         [HttpGet]
         public async Task<IActionResult> Action()
         {
             Counter++;
+            ViewData["Message"] = "HomeForumController's Action!";
             return await Task.FromResult(new ForumActionResult());
         }
 

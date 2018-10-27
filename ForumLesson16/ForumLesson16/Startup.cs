@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -24,22 +20,20 @@ namespace ForumLesson16
         {
             services.Configure<CookiePolicyOptions>(options =>
             {
-                // This lambda determines whether user consent for non-essential cookies is needed for a given request.
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
             services.AddSingleton<IHomeForumController, HomeForumController>();
 
-            services.AddMvc(options =>
+            services.AddMvc(/*options =>
             {
-                options.Filters.Add(new TimeFilterAttribute());
-            })
+                options.Filters.Add(new TimeActionFilter());
+                options.Filters.Add(new ReverseExceptionFilter());
+                options.Filters.Add(new TimeActionFilter());
+            }*/)
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
-                .AddControllersAsServices();
-               
-
-            
+                .AddControllersAsServices();           
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
@@ -49,13 +43,8 @@ namespace ForumLesson16
 
             app.UseStaticFiles();
             app.UseCookiePolicy();
-         
-            
 
-            app.UseMvc(routes =>
-            {
-                routes.Routes.Add(new HtmlMethodRouter(routes.DefaultHandler));
-            });
+            app.UseMvc(routes => routes.Routes.Add(new HtmlMethodRouter(routes.DefaultHandler)));
         }
     }
 }
