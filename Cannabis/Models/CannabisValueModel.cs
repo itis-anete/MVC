@@ -37,7 +37,10 @@ namespace Cannabis.Models
 
         private string IsValidValue(object value)
         {
-            var type = value.GetType();
+            var type = value?.GetType();
+            if (type == null)
+                return null;
+
             if (type == typeof(int))
                 return (int)value >= -1 ? null
                     : "Number must be not smaller than -1";

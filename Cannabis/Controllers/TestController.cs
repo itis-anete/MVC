@@ -1,7 +1,7 @@
-﻿using Cannabis.Attributes;
+﻿using Cannabis.ActionResults;
+using Cannabis.Attributes;
 using Cannabis.Models;
 using Microsoft.AspNetCore.Mvc;
-using System;
 
 namespace Cannabis.Controllers
 {
@@ -12,11 +12,16 @@ namespace Cannabis.Controllers
             [CannabisValidValue(typeof(string))]
             public CannabisValue TestCannabis { get; set; }
         }
+        
+        public IActionResult Test([FromCannabisSpec] PostModel parameter)
+        {
+            return new DataResult<PostModel>(parameter);
+        }
 
         [HttpPost]
-        public void Post([FromCannabisSpec] PostModel parameter)
+        public IActionResult Post([FromCannabisSpec] PostModel parameter)
         {
-            Console.WriteLine(parameter.TestCannabis);
+            return new DataResult<PostModel>(parameter);
         }
     }
 }

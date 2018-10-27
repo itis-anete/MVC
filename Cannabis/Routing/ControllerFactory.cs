@@ -31,6 +31,7 @@ namespace Cannabis.Routing
         {
         }
 
-        private readonly Dictionary<string, ICannabisController> _controllers = new Dictionary<string, ICannabisController>();
+        private readonly Dictionary<string, ICannabisController> _controllers
+            = new Dictionary<string, ICannabisController>();
     }
 }
