@@ -9,7 +9,7 @@ namespace MarketplaceMVC.Tags
         public static HtmlString MarketplaceButton(this IHtmlHelper html, MarketplaceValue value)
         {
             var result = "<button>";
-            result += value.TypeOfValue;
+            result += value.MValueType;
             result += "</button>";
             return new HtmlString(result);
         }

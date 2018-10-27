@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewEngines;
 
-namespace MarketplaceMVC.MarketplaceViewEngine
+namespace MarketplaceMVC.ViewEngine
 {
     public class MarketplaceView : IView
     {

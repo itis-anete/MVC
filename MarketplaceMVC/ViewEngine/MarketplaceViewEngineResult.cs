@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using Microsoft.AspNetCore.Mvc.ViewEngines;
 
-namespace MarketplaceMVC.MarketplaceViewEngine
+namespace MarketplaceMVC.ViewEngine
 {
     public class MarketplaceViewEngineResult
     {

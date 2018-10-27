@@ -10,19 +10,19 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Update="Home\About\cshtml.About.cshtml">
+    <Content Update="Marketplace\About\cshtml.About.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
-    <Content Update="Home\Contact\cshtml.Contact.cshtml">
+    <Content Update="Marketplace\Contact\cshtml.Contact.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
-    <Content Update="Home\Index\cshtml.Index.cshtml">
+    <Content Update="Marketplace\Index\cshtml.Index.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
-    <Content Update="Home\Marketplace\cshtml.Marketplace.cshtml">
+    <Content Update="Marketplace\Marketplace\cshtml.Marketplace.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
-    <Content Update="Home\Privacy\cshtml.Privacy.cshtml">
+    <Content Update="Marketplace\Privacy\cshtml.Privacy.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
   </ItemGroup>

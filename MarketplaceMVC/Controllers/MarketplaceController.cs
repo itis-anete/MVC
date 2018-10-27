@@ -1,5 +1,4 @@
-﻿using System;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using MarketplaceMVC.ActionResults;
 using MarketplaceMVC.Filters;
 using MarketplaceMVC.Models;
@@ -7,11 +6,11 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace MarketplaceMVC.Controllers
 {
-    public class HomeController : Controller, IMarketplaceController
+    public class MarketplaceController : Controller, IMarketplaceController
     {
         public static int CallCounter { get; set; }
 
-        public HomeController()
+        public MarketplaceController()
         {
             CallCounter++;
         }
@@ -37,16 +36,9 @@ namespace MarketplaceMVC.Controllers
         public IActionResult Contact()
         {
             ViewData["CallCounter"] = CallCounter;
-
-            try
-            {
-                var y = 0;
-                var x = 5 / y;
-            }
-            catch
-            {
-                throw new DivideByZeroException();
-            }
+            
+            var y = 0;
+            var x = 5 / y;
 
             return new MarketplaceActionResult(View());
         }

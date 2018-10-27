@@ -1,6 +1,7 @@
 ﻿using MarketplaceMVC.Filters;
 using MarketplaceMVC.Middlewares;
 using MarketplaceMVC.Routing;
+using MarketplaceMVC.ViewEngine;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -37,7 +38,7 @@ namespace MarketplaceMVC
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
-            services.AddSingleton<IRazorViewEngine, MarketplaceViewEngine.MarketplaceViewEngine>();
+            services.AddSingleton<IRazorViewEngine, MarketplaceViewEngine>();
 
             services.Configure<MvcViewOptions>(options =>
             {
@@ -65,15 +66,15 @@ namespace MarketplaceMVC
             
             app.UseMvc(routes =>
             {
-                routes.MapRoute(
-                    name: "marketplace",
-                    template: "Marketplace_{controller=Home}Controller/{action=Index}Action/{id?}");
+                //routes.MapRoute(
+                //    name: "marketplace",
+                //    template: "Marketplace_{controller=Home}Controller/{action=Index}Action/{id?}");
 
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    template: "{controller=Marketplace}/{action=Index}/{id?}");
 
-                routes.Routes.Add(new Router());
+                //routes.Routes.Add(new Router());
             });
 
         }

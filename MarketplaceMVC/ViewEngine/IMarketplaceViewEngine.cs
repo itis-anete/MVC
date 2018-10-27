@@ -1,4 +1,4 @@
-﻿namespace MarketplaceMVC.MarketplaceViewEngine
+﻿namespace MarketplaceMVC.ViewEngine
 {
     public interface IMarketplaceViewEngine
     {
