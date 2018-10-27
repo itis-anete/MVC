@@ -1,5 +1,4 @@
-﻿using Cannabis.Controllers;
-using Microsoft.AspNetCore.Mvc.Abstractions;
+﻿using Microsoft.AspNetCore.Mvc.Abstractions;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc.Routing;
 using System;
@@ -19,23 +18,33 @@ namespace Cannabis.Routing
 
         public void OnProvidersExecuting(ActionDescriptorProviderContext context)
         {
+            if (context == null)
+                throw new ArgumentNullException(nameof(context));
+
             var result = new List<ControllerActionDescriptor>();
-            foreach (var controller in Assembly.GetCallingAssembly()
-                .GetTypes()
-                .Where(type => typeof(ICannabisController).IsAssignableFrom(type)))
-                foreach (var action in controller.GetMethods(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly))
+            foreach (var controller in ProjectInfo.ControllerTypes)
+                foreach (var action in controller
+                    .GetMethods(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly))
                 {
                     var httpMethodAttribute = action.GetCustomAttribute<HttpMethodAttribute>(true);
                     var httpMethod = httpMethodAttribute?.HttpMethods.FirstOrDefault() ?? "GET";
+
+                    var parameterDescriptors = action.GetParameters()
+                        .Select(parameter => new ParameterDescriptor()
+                            {
+                                Name = parameter.Name,
+                                ParameterType = parameter.ParameterType
+                            })
+                        .ToList();
 
                     var actionDescriptor = new ControllerActionDescriptor()
                     {
                         ActionName = httpMethod + action.Name,
                         DisplayName = action.Name,
                         ControllerName = controller.Name,
-                        MethodInfo = action
+                        MethodInfo = action,
+                        Parameters = parameterDescriptors
                     };
-                    actionDescriptor.RouteValues["HttpMethod"] = httpMethod;
 
                     context.Results.Add(actionDescriptor);
                 }

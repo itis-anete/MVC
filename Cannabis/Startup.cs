@@ -52,8 +52,8 @@ namespace Cannabis
 
                 routes.Routes.Add(
                     new Router(
-                        new ActionInvokerFactory(new[] { new ActionInvokerProvider() }),
-                        new Routing.ActionSelector(new Routing.ControllerActionDescriptorProvider())));
+                        new ActionInvokerFactory(new[] { new Routing.ControllerActionInvokerProvider() }),
+                        new Routing.ControllerActionSelector(new Routing.ControllerActionDescriptorProvider())));
             });
         }
     }

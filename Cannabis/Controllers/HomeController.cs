@@ -1,7 +1,6 @@
-﻿using System;
-using System.Diagnostics;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Route.Models;
+using System.Diagnostics;
 
 namespace Cannabis.Controllers
 {

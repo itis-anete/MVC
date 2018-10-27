@@ -7,11 +7,12 @@ namespace Cannabis.Filters
     {
         public void OnActionExecuted(ActionExecutedContext context)
         {
-            throw new NotImplementedException();
         }
 
         public void OnActionExecuting(ActionExecutingContext context)
         {
+            if (context == null)
+                throw new ArgumentNullException(nameof(context));
             throw new NotImplementedException();
         }
     }

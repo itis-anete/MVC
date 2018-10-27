@@ -8,6 +8,9 @@ namespace Cannabis.Filters
     {
         public void OnException(ExceptionContext exceptionContext)
         {
+            if (exceptionContext == null)
+                throw new ArgumentNullException(nameof(exceptionContext));
+
             if (!exceptionContext.ExceptionHandled && exceptionContext.Exception is IndexOutOfRangeException)
             {
                 exceptionContext.Result = new RedirectResult("/Content/ExceptionFound.html");

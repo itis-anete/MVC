@@ -15,8 +15,11 @@ namespace Cannabis.ActionResults
 
         public async Task ExecuteResultAsync(ActionContext context)
         {
+            if (context == null)
+                throw new ArgumentNullException(nameof(context));
+
             var response = context.HttpContext.Response;
-            response.Headers["ServerApplication"] = Program.ProjectName;
+            response.Headers["ServerApplication"] = ProjectInfo.ProjectName;
 
             var responseString = JsonConvert.SerializeObject(_data);
             await response.WriteAsync(responseString);

@@ -1,4 +1,4 @@
-﻿using Cannabis.Validation;
+﻿using Cannabis.Attributes;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -9,6 +9,7 @@ namespace Cannabis.Models
 {
     public class CannabisValueModel : CannabisValue, IValidatableObject
     {
+        public CannabisValueModel() : base((object)null) { }
         public CannabisValueModel(object value) : base(value) { }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
