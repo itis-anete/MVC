@@ -1,19 +1,16 @@
-﻿using Microsoft.AspNetCore.Mvc.Razor;
+﻿using System;
+using System.Diagnostics;
+using System.Text.Encodings.Web;
+using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.AspNetCore.Razor.Language;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text.Encodings.Web;
-using System.Threading.Tasks;
 
-namespace MarketplaceMVC.NewViewEngine
+namespace MarketplaceMVC.MarketplaceViewEngine
 {
-    public class CustomViewEngine : RazorViewEngine, ICustomViewEngine
+    public class MarketplaceViewEngine : RazorViewEngine, IMarketplaceViewEngine
     {
-        public CustomViewEngine(IRazorPageFactoryProvider pageFactory,
+        public MarketplaceViewEngine(IRazorPageFactoryProvider pageFactory,
             IRazorPageActivator pageActivator,
             HtmlEncoder htmlEncoder,
             IOptions<RazorViewEngineOptions> optionsAccessor,
@@ -33,10 +30,8 @@ namespace MarketplaceMVC.NewViewEngine
                 throw new ArgumentException(nameof(optionsAccessor));
 
             options.ViewLocationFormats.Clear();
-            options.ViewLocationFormats.Add(@"\Views\Shared\{0}.cshtml");
             options.ViewLocationFormats.Add(@"\{1}\{0}\cshtml.{0}.cshtml");
-
-
+            options.ViewLocationFormats.Add(@"\Views\Shared\{0}.cshtml");
         }
     }
 }

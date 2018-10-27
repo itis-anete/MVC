@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
-using MarketplaceMVC.Actions;
+using MarketplaceMVC.ActionResults;
 using MarketplaceMVC.Filters;
 using MarketplaceMVC.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -16,18 +16,12 @@ namespace MarketplaceMVC.Controllers
             CallCounter++;
         }
 
-        public MarketplaceValue Name { get; set; }
-        public MarketplaceValue Age { get; set; }
-        public MarketplaceValue Address { get; set; }
-        public MarketplaceValue IsStudent { get; set; }
-        public MarketplaceValue Leva { get; set; }
-
         [HtmlFilterResult]
         public IActionResult Index()
         {
             ViewData["CallCounter"] = CallCounter;
 
-            return new MarketplaceActionResult(View(Name));
+            return new MarketplaceActionResult(View());
 
         }
 
@@ -36,7 +30,7 @@ namespace MarketplaceMVC.Controllers
         {
             ViewData["CallCounter"] = CallCounter;
 
-            return new MarketplaceActionResult(View(Name));
+            return new MarketplaceActionResult(View());
         }
 
         [ReverseExceptionFilter]
@@ -54,14 +48,14 @@ namespace MarketplaceMVC.Controllers
                 throw new DivideByZeroException();
             }
 
-            return new MarketplaceActionResult(View(Name));
+            return new MarketplaceActionResult(View());
         }
 
         public IActionResult Privacy()
         {
             ViewData["CallCounter"] = CallCounter;
 
-            return new MarketplaceActionResult(View(Name));
+            return new MarketplaceActionResult(View());
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
@@ -73,19 +67,8 @@ namespace MarketplaceMVC.Controllers
         public MarketplaceActionResult Marketplace()
         {
             ViewData["CallCounter"] = CallCounter;
-
-            Name = new MarketplaceValue("Leva");
-            Age = new MarketplaceValue(20);
-            IsStudent = new MarketplaceValue(true);
-            Address = new MarketplaceValue(new {City = "Kazan", Street = "Zilantovskaya", House = 18, Flat = 25});
-            Leva = new MarketplaceValue(new {Name, Age, Address, IsStudent});
-
-            return new MarketplaceActionResult(View(Leva));
-        }
-
-        public IActionResult TrueDirect()
-        {
-            return View();
+            
+            return new MarketplaceActionResult(View(new MarketplaceValue("Kek")));
         }
     }
 }

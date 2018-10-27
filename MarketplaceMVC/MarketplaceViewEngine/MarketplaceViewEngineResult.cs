@@ -1,15 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc.ViewEngines;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc.ViewEngines;
 
-namespace MarketplaceMVC.NewViewEngine
+namespace MarketplaceMVC.MarketplaceViewEngine
 {
-    public class CustomViewEngineResult
+    public class MarketplaceViewEngineResult
     {
-        private CustomViewEngineResult()
+        private MarketplaceViewEngineResult()
         {
         }
 
@@ -18,7 +16,7 @@ namespace MarketplaceMVC.NewViewEngine
         public string ViewName { get; private set; }
         public bool Success => View != null;
 
-        public static CustomViewEngineResult NotFound(
+        public static MarketplaceViewEngineResult NotFound(
             string viewName,
             IEnumerable<string> searchedLocations)
         {
@@ -28,14 +26,14 @@ namespace MarketplaceMVC.NewViewEngine
             if (searchedLocations == null)
                 throw new ArgumentNullException(nameof(searchedLocations));
 
-            return new CustomViewEngineResult
+            return new MarketplaceViewEngineResult
             {
                 SearchedLocations = searchedLocations,
                 ViewName = viewName,
             };
         }
 
-        public static CustomViewEngineResult Found(string viewName, IView view)
+        public static MarketplaceViewEngineResult Found(string viewName, IView view)
         {
             if (viewName == null)
                 throw new ArgumentNullException(nameof(viewName));
@@ -43,7 +41,7 @@ namespace MarketplaceMVC.NewViewEngine
             if (view == null)
                 throw new ArgumentNullException(nameof(view));
 
-            return new CustomViewEngineResult
+            return new MarketplaceViewEngineResult
             {
                 View = view,
                 ViewName = viewName,

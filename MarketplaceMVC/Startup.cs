@@ -21,8 +21,7 @@ namespace MarketplaceMVC
         }
 
         public IConfiguration Configuration { get; }
-
-        // This method gets called by the runtime. Use this method to add services to the container.
+   
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc(options =>
@@ -32,14 +31,13 @@ namespace MarketplaceMVC
 
             services.Configure<CookiePolicyOptions>(options =>
             {
-                // This lambda determines whether user consent for non-essential cookies is needed for a given request.
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
-            services.AddSingleton<IRazorViewEngine, MarketplaceMVC.NewViewEngine.CustomViewEngine>();
+            services.AddSingleton<IRazorViewEngine, MarketplaceViewEngine.MarketplaceViewEngine>();
 
             services.Configure<MvcViewOptions>(options =>
             {
@@ -48,8 +46,7 @@ namespace MarketplaceMVC
 
             services.Replace(ServiceDescriptor.Singleton<IControllerFactory, ControllerFactory>());
         }
-
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             app.UseMiddleware<TimerMiddleware>();

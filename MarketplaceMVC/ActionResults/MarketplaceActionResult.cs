@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 
-namespace MarketplaceMVC.Actions
+namespace MarketplaceMVC.ActionResults
 {
     public class MarketplaceActionResult : IActionResult
     {
