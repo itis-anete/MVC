@@ -8,13 +8,8 @@ namespace MarketplaceMVC.Controllers
 {
     public class MarketplaceController : Controller, IMarketplaceController
     {
-        public static int CallCounter { get; set; }
-
-        public MarketplaceController()
-        {
-            CallCounter++;
-        }
-
+        public int CallCounter { get; set; }
+        
         [HtmlFilterResult]
         public IActionResult Index()
         {
@@ -56,11 +51,34 @@ namespace MarketplaceMVC.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
+        [HttpGet]
         public MarketplaceActionResult Marketplace()
         {
             ViewData["CallCounter"] = CallCounter;
-            
-            return new MarketplaceActionResult(View(new MarketplaceValue("Kek")));
+
+            var model = new MarketplaceModel {Age = new MarketplaceValue(20)};
+
+            return new MarketplaceActionResult(View(model));
+        }
+
+        [HttpPost]
+        public MarketplaceActionResult Marketplace(int number)
+        {
+            ViewData["CallCounter"] = CallCounter;
+
+            var model = new MarketplaceModel { Age = new MarketplaceValue(10) };
+
+            return new MarketplaceActionResult(View(model));
+        }
+
+        [HttpPut]
+        public MarketplaceActionResult Marketplace(int number, int age)
+        {
+            ViewData["CallCounter"] = CallCounter;
+
+            var model = new MarketplaceModel { Age = new MarketplaceValue(5) };
+
+            return new MarketplaceActionResult(View(model));
         }
     }
 }

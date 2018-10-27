@@ -10,6 +10,8 @@ namespace MarketplaceMVC.Models
     {
         public MarketplaceValueModel(object value) : base(value) { }
 
+        public MarketplaceValueModel() : base((object)null) { }
+
         private ValidationResult ValidateMember(MemberInfo member, object value)
         {
             if (member.GetCustomAttribute<MarketplaceValidValueAttribute>() == null)

@@ -1,7 +1,6 @@
-﻿@using MarketplaceMVC.Models
-@using MarketplaceMVC.Tags
+﻿@using MarketplaceMVC.Tags
 
-@model MarketplaceMVC.Models.MarketplaceValue
+@model MarketplaceMVC.Models.MarketplaceModel
 
 @{
     ViewData["Title"] = "Marketplace";
@@ -14,4 +13,4 @@
 
 @Html.MarketplaceButton(@Model)
 
-<h4>@Model.MValue</h4>
+<h4>@Model.Age</h4>

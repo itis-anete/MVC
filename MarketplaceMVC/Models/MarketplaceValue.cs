@@ -44,13 +44,13 @@ namespace MarketplaceMVC.Models
         public MarketplaceValue(string value)
         {
             StringValue = value;
-            MValueType = value.GetType();
+            MValueType = value?.GetType();
         }
 
         public MarketplaceValue(object value)
         {
             ObjectValue = value;
-            MValueType = value.GetType();
+            MValueType = value?.GetType();
         }
 
         public override string ToString()

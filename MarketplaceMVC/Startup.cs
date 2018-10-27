@@ -66,15 +66,11 @@ namespace MarketplaceMVC
             
             app.UseMvc(routes =>
             {
-                //routes.MapRoute(
-                //    name: "marketplace",
-                //    template: "Marketplace_{controller=Home}Controller/{action=Index}Action/{id?}");
-
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Marketplace}/{action=Index}/{id?}");
+                    template: "Marketplace_{controller=Marketplace}Controller/GET{action=Index}/");
 
-                //routes.Routes.Add(new Router());
+                routes.Routes.Add(new MarketplaceRouter(routes.DefaultHandler));
             });
 
         }
