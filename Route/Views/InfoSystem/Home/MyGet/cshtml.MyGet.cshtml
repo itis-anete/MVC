@@ -1,0 +1,14 @@
+@model InfoSystemValue
+@{
+    ViewData["Title"] = "My Get";
+}
+@addTagHelper Route.MyTableTag, Route
+<h2>@ViewData["Title"]</h2>
+
+
+<h3>This is MyGet!</h3>
+
+
+@Html.GetButton(@Model)
+
+<my-table-tag></my-table-tag>
