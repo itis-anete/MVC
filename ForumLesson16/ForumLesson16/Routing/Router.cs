@@ -20,7 +20,8 @@ namespace ForumLesson16
 
         public async Task RouteAsync(RouteContext context)
         {
-            
+            var httpMethod = context.HttpContext.Request.Method;
+            // GETAction
             var urlTokens = context.HttpContext.Request.Path.Value
                 .TrimStart('/')
                 .TrimEnd('/')

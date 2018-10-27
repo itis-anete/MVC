@@ -20,7 +20,6 @@ namespace ForumLesson16
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.Configure<CookiePolicyOptions>(options =>
@@ -30,14 +29,19 @@ namespace ForumLesson16
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            services.AddSingleton<IForumController, ForumController>();
+            services.AddSingleton<IHomeForumController, HomeForumController>();
 
-            services.AddMvc()
+            services.AddMvc(options =>
+            {
+                options.Filters.Add(new TimeFilterAttribute());
+            })
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
                 .AddControllersAsServices();
+               
+
+            
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment()) app.UseDeveloperExceptionPage();
@@ -46,17 +50,11 @@ namespace ForumLesson16
             app.UseStaticFiles();
             app.UseCookiePolicy();
          
+            
+
             app.UseMvc(routes =>
             {
                 routes.Routes.Add(new HtmlMethodRouter(routes.DefaultHandler));
-
-                routes.MapRoute(
-                    name: "default",
-                    template: "Forum_{controller=Home}Controller/{action=Index}/{id?}");
-
-                //routes.MapRoute(
-                //    name: "default",
-                //    template: "Forum_{controller=HomeForumController}Controller/{httpMethod}{action=Action}");
             });
         }
     }

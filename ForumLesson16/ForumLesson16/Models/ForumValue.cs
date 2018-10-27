@@ -5,8 +5,7 @@ using System.Threading.Tasks;
 
 namespace ForumLesson16
 {
-    [AttributeUsage(AttributeTargets.Parameter)]
-    public class FromForumSpec : Attribute
+    public class ForumValue : ForumValueModel
     {
     }
 }
