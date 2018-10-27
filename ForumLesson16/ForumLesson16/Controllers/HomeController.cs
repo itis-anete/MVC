@@ -10,6 +10,11 @@ namespace ForumLesson16.Controllers
 {
     public class HomeController : Controller
     {
+        public IActionResult Action()
+        {
+            return View();
+        }
+
         public IActionResult Index()
         {
             return View();

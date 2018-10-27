@@ -13,7 +13,7 @@ namespace ForumLesson16
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration) 
         {
             Configuration = configuration;
         }
@@ -30,30 +30,33 @@ namespace ForumLesson16
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+            services.AddSingleton<IForumController, ForumController>();
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddMvc()
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
+                .AddControllersAsServices();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
-            else
-            {
-                app.UseExceptionHandler("/Home/Error");
-            }
+            if (env.IsDevelopment()) app.UseDeveloperExceptionPage();
+            else app.UseExceptionHandler("/Home/Error");
 
             app.UseStaticFiles();
             app.UseCookiePolicy();
-
+         
             app.UseMvc(routes =>
             {
+                routes.Routes.Add(new HtmlMethodRouter(routes.DefaultHandler));
+
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    template: "Forum_{controller=Home}Controller/{action=Index}/{id?}");
+
+                //routes.MapRoute(
+                //    name: "default",
+                //    template: "Forum_{controller=HomeForumController}Controller/{httpMethod}{action=Action}");
             });
         }
     }
