@@ -1,22 +1,9 @@
-﻿using Cannabis.Attributes;
-using Cannabis.Models;
-using Microsoft.AspNetCore.Mvc;
-using System;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace Cannabis.Controllers
 {
     public class CannabisController : Controller, ICannabisController
     {
-        public class PostModel : CannabisValueModel
-        {
-            [CannabisValidValue(typeof(string))]
-            public CannabisValue TestCannabis { get; set; }
-        }
-
-        [HttpPost]
-        public void Post([FromCannabisSpec] PostModel parameter)
-        {
-            Console.WriteLine(parameter.TestCannabis);
-        }
+        public int CallCounter { get; set; }
     }
 }

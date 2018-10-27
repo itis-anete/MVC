@@ -3,9 +3,11 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace Cannabis
 {
@@ -29,6 +31,7 @@ namespace Cannabis
             });
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.Replace(ServiceDescriptor.Singleton<IControllerFactory, ControllerFactory>());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

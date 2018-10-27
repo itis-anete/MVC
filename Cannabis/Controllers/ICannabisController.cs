@@ -1,4 +1,7 @@
 ﻿namespace Cannabis.Controllers
 {
-    public interface ICannabisController { }
+    public interface ICannabisController
+    {
+        int CallCounter { get; set; }
+    }
 }

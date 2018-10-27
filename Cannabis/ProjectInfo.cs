@@ -19,6 +19,5 @@ namespace Cannabis
                 type != ControllerInterfaceType &&
                 ControllerInterfaceType.IsAssignableFrom(type))
             .ToArray();
-
     }
 }

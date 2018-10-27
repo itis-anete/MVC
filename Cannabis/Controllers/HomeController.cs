@@ -1,39 +1,40 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Route.Models;
+﻿using Cannabis.Models;
+using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
 namespace Cannabis.Controllers
 {
-    public class HomeController : Controller, ICannabisController
+    public class HomeController : CannabisController
     {
         public IActionResult Index()
         {
-            return View();
+            ViewData["CallCounter"] = CallCounter;
+            return new ActionResults.ViewResult(View());
         }
 
         public IActionResult About()
         {
             ViewData["Message"] = "Your application description page.";
-
-            return View();
+            return new ActionResults.ViewResult(View());
         }
         
         public IActionResult Contact()
         {
             ViewData["Message"] = "Your contact page.";
-
-            return View();
+            return new ActionResults.ViewResult(View());
         }
         
         public IActionResult Privacy()
         {
-            return View();
+            return new ActionResults.ViewResult(View());
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            return new ActionResults.ViewResult(
+                View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier })
+            );
         }
     }
 }

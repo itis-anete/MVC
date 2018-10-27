@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Cannabis.Controllers;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using System;
 using System.Collections.Generic;
@@ -15,12 +16,14 @@ namespace Cannabis.Routing
             var controllerName = context.ActionDescriptor.ControllerName;
             if (!_controllers.TryGetValue(controllerName, out var controller))
             {
-                controller = context.ActionDescriptor.ControllerTypeInfo
+                controller = (ICannabisController)context.ActionDescriptor.ControllerTypeInfo
                     .GetConstructor(new Type[0])?
                     .Invoke(new object[0]);
                 if (controller != null)
                     _controllers[controllerName] = controller;
             }
+
+            ++controller.CallCounter;
             return controller;
         }
 
@@ -28,6 +31,6 @@ namespace Cannabis.Routing
         {
         }
 
-        private readonly Dictionary<string, object> _controllers = new Dictionary<string, object>();
+        private readonly Dictionary<string, ICannabisController> _controllers = new Dictionary<string, ICannabisController>();
     }
 }
