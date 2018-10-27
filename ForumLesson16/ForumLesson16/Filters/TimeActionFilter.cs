@@ -8,16 +8,25 @@ namespace ForumLesson16
 {
     public class TimeActionFilter : IActionFilter
     {
-        public void OnActionExecuted(ActionExecutedContext context)
+        private DateTime traceStart;
+        public readonly Stopwatch stopwatch;
+
+        public TimeActionFilter()
         {
-            //timer start
-            throw new NotImplementedException();
+            stopwatch = new Stopwatch();
         }
 
         public void OnActionExecuting(ActionExecutingContext context)
         {
-            //finish
-            throw new NotImplementedException();
+            traceStart = DateTime.UtcNow;
+            stopwatch.Start();
+        }
+
+        public void OnActionExecuted(ActionExecutedContext context)
+        {
+            stopwatch.Stop();
+            var traceEnd = traceStart
+                           .AddMilliseconds(stopwatch.ElapsedMilliseconds);
         }
     }
 }
