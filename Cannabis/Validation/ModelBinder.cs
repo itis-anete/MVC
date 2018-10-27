@@ -8,7 +8,7 @@ namespace Cannabis.Validation
     {
         public Task BindModelAsync(ModelBindingContext bindingContext)
         {
-            bindingContext.Result = ModelBindingResult.Success(bindingContext.ValueProvider.GetValue("balls"));
+            
             return Task.CompletedTask;
         }
     }

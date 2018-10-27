@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Internal;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -49,11 +48,8 @@ namespace Cannabis
                     name: "default",
                     template: "",
                     defaults: new { controller = "Home", action = "Index" });
-
-                routes.Routes.Add(
-                    new Router(
-                        new ActionInvokerFactory(new[] { new Routing.ControllerActionInvokerProvider() }),
-                        new Routing.ControllerActionSelector(new Routing.ControllerActionDescriptorProvider())));
+                
+                routes.Routes.Add(new CannabisRouter(routes.DefaultHandler));
             });
         }
     }
