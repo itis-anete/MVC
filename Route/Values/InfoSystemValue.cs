@@ -12,8 +12,6 @@ namespace Route
         
         public InfoSystemValue(object value)
         {
-            //objValue = value;
-            
             if (int.TryParse(value.ToString(), out var intRes))
             {
                 intValue = intRes;
