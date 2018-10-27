@@ -1,24 +1,30 @@
 using System;
+using System.Threading;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace Route.Filters
 {
-    public class ActionFilter : Attribute, IActionFilter
+    public class ActionFilter : Attribute, IActionFilter, IAsyncActionFilter
     {
-        /// <summary>
-        /// Description
-        /// время запроса можно получить в роутере (маршрутизации)
-        /// сравнивать время сейчас - время начала запроса 
-        /// оптимальное время задержки - если больше 60мс => отказ в Response (не слать http ошибки, текстом)
-        /// </summary>
-
-        public void OnActionExecuting(ActionExecutingContext context)
+        public async void OnActionExecuting(ActionExecutingContext context)
         {
-            //context.HttpContext.Response.WriteAsync("Abort: Request timed out.");
+            if ((DateTime.Now - Router.Start.Value).TotalMilliseconds > 1)
+                await context.HttpContext.Response.WriteAsync("Request Timed Out.");
         }
 
         public void OnActionExecuted(ActionExecutedContext context)
         {
+            context.Result = new ContentResult {Content = "ActionFilter completed."};
+        }
+
+        public Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
+        {
+            OnActionExecuting(context);
+            OnActionExecuted(next.Invoke().Result);
+            return Task.CompletedTask;
         }
     }
 }

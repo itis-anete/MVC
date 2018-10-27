@@ -1,26 +1,26 @@
 using System;
+using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace Route
 {
-    public class ExceptionFilter : ExceptionFilterAttribute, IAsyncExceptionFilter, IExceptionFilter, IOrderedFilter
+    public class ExceptionFilter : Attribute, IAsyncExceptionFilter, IExceptionFilter
     {
-        public new Task OnExceptionAsync(ExceptionContext context)
+        public Task OnExceptionAsync(ExceptionContext context)
         {
-            if (context == null)
-            {
-                throw new ArgumentNullException(nameof(context));
-            }
-
-            OnException(context);
+            context.Result = new ContentResult{Content = string.Join("", context.Exception.Message.Reverse())};
+            context.Result.ExecuteResultAsync(context);
+            context.ExceptionHandled = true;
             return Task.CompletedTask;
         }
 
-        public new void OnException(ExceptionContext context)
+        public async void OnException(ExceptionContext context)
         {
-            context.HttpContext.Response.WriteAsync(context.Exception.Message);
+            await OnExceptionAsync(context);
         }
     }
 }
