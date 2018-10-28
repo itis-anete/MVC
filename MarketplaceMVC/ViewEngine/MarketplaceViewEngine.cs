@@ -31,8 +31,8 @@ namespace MarketplaceMVC.ViewEngine
                 throw new ArgumentException(nameof(optionsAccessor));
 
             options.ViewLocationFormats.Clear();
-            options.ViewLocationFormats.Add(@"\{1}\{0}\cshtml.{0}.cshtml");
-            options.ViewLocationFormats.Add(@"\Views\Shared\{0}.cshtml");
+            options.ViewLocationFormats.Add(@"/{1}/{0}/cshtml.{0}.cshtml");
+            options.ViewLocationFormats.Add(@"/Shared/{0}.cshtml");
         }
     }
 }

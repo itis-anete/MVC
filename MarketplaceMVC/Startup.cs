@@ -68,7 +68,8 @@ namespace MarketplaceMVC
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "Marketplace_{controller=Marketplace}Controller/GET{action=Index}/");
+                    template: "",
+                    defaults: new { controller = "Marketplace", action = "Index" });
 
                 routes.Routes.Add(new MarketplaceRouter(routes.DefaultHandler));
             });

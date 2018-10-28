@@ -4,58 +4,58 @@ namespace MarketplaceMVC.Models
 {
     public class MarketplaceValue
     {
-        public bool? BoolValue { get; }
-        public long? IntValue { get; }
-        public object ObjectValue { get; }
-        public string StringValue { get; }
-        public double? DoubleValue { get; set; }
+        public bool? BoolValue { get; private set; }
+        public long? IntValue { get; private set; }
+        public double? DoubleValue { get; private set; }
+        public object ObjectValue { get; private set; }
+        public string StringValue { get; private set; }
 
-        public Type MValueType { get; set; }
+        public Type MValueType { get; private set; }
 
-        public object MValue => 
-            MValueType == typeof(bool)
+        public object MValue
+        {
+            get => MValueType == typeof(bool)
                 ? BoolValue
                 : MValueType == typeof(int)
-                    ? (int)IntValue
-                    : MValueType == typeof (double) 
-                        ? DoubleValue 
+                    ? (int) IntValue
+                    : MValueType == typeof(double)
+                        ? DoubleValue
                         : MValueType == typeof(string)
                             ? StringValue
                             : ObjectValue;
-
-        public MarketplaceValue(bool value)
-        {
-            BoolValue = value;
-            MValueType = value.GetType();
+            set
+            {
+                switch (value)
+                {
+                    case bool boolValue:
+                        BoolValue = boolValue;
+                        break;
+                    case double doubleValue:
+                        DoubleValue = doubleValue;
+                        break;
+                    case int intValue:
+                        IntValue = intValue;
+                        break;
+                    case string stringValue:
+                        StringValue = stringValue;
+                        break;
+                    default:
+                        ObjectValue = value;
+                        break;
+                }
+                MValueType = value?.GetType();
+            }
         }
 
-        public MarketplaceValue(int value)
+        public MarketplaceValue() : this(null)
         {
-            IntValue = value;
-            MValueType = value.GetType();
-        }
-
-        public MarketplaceValue(double value)
-        {
-            DoubleValue = value;
-            MValueType = value.GetType();
-        }
-
-        public MarketplaceValue(string value)
-        {
-            StringValue = value;
-            MValueType = value?.GetType();
         }
 
         public MarketplaceValue(object value)
         {
-            ObjectValue = value;
-            MValueType = value?.GetType();
+            MValue = value;
         }
 
-        public override string ToString()
-        {
-            return MValue.ToString();
-        }
+        public override string ToString() => MValue?.ToString() ?? "";
     }
 }
