@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System.Collections.Generic;
+using System.Diagnostics;
 using MarketplaceMVC.ActionResults;
 using MarketplaceMVC.Attributes;
 using MarketplaceMVC.Filters;
@@ -21,11 +22,15 @@ namespace MarketplaceMVC.Controllers
         }
 
         [HtmlFilterResult]
-        public IActionResult About()
+        public MarketplaceResActionResult About()
         {
-            ViewData["CallCounter"] = CallCounter;
+            //ViewData["CallCounter"] = CallCounter;
 
-            return new MarketplaceActionResult(View());
+            var viewData = new Dictionary<string, object>();
+            viewData.Add("Title", "MkpDictionary");
+            viewData.Add("CallCounter", CallCounter);
+            return new MarketplaceResActionResult(View(), viewData);
+            //return new MarketplaceActionResult(View());
         }
 
         [ReverseExceptionFilter]
@@ -87,5 +92,6 @@ namespace MarketplaceMVC.Controllers
 
             return new MarketplaceActionResult(View(model));
         }
+
     }
 }
