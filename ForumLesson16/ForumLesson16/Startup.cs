@@ -18,6 +18,11 @@ namespace ForumLesson16
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddMvc(options =>
+            {
+                options.Filters.Add(typeof(TimeActionFilter));
+            });
+
             services.Configure<CookiePolicyOptions>(options =>
             {
                 options.CheckConsentNeeded = context => true;
@@ -44,7 +49,14 @@ namespace ForumLesson16
             app.UseStaticFiles();
             app.UseCookiePolicy();
 
-            app.UseMvc(routes => routes.Routes.Add(new HtmlMethodRouter(routes.DefaultHandler)));
+            app.UseMvc(routes =>
+            {
+                routes.MapRoute(
+                    name: "default",
+                    template: "ForumLesson16_{controller=Home}Controller/{action=Index}/");
+
+                routes.Routes.Add(new HtmlMethodRouter(routes.DefaultHandler));
+            });
         }
     }
 }
