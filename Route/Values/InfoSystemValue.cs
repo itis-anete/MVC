@@ -1,10 +1,11 @@
 using System;
+using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Route
 {
     [ModelBinder(typeof(FromInfoSystemSpecAttribute))]
-    public class InfoSystemValue : Attribute
+    public class InfoSystemValue : ValidationAttribute
     {
         public InfoSystemValue()
         {   
