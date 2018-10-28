@@ -9,7 +9,7 @@ namespace Cannabis.Controllers
         
         public IActionResult Calls()
         {
-            return new DataResult<int>(CallCounter);
+            return new JsonResult<int>(CallCounter);
         }
     }
 }

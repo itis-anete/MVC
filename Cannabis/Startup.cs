@@ -51,7 +51,11 @@ namespace Cannabis
                     name: "default",
                     template: "",
                     defaults: new { controller = "Home", action = "Index" });
-                
+                routes.MapRoute(
+                    name: "test",
+                    template: "test",
+                    defaults: new { controller = "Test", action = "Test" });
+
                 routes.Routes.Add(new CannabisRouter(routes.DefaultHandler));
             });
         }
