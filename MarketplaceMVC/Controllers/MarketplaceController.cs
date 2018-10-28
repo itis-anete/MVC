@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using MarketplaceMVC.ActionResults;
+using MarketplaceMVC.Attributes;
 using MarketplaceMVC.Filters;
 using MarketplaceMVC.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -62,11 +63,11 @@ namespace MarketplaceMVC.Controllers
         }
 
         [HttpPost]
-        public MarketplaceActionResult Marketplace(int number)
+        public MarketplaceActionResult Marketplace([FromMarketplaceSpec]MarketplaceModel model)
         {
             ViewData["CallCounter"] = CallCounter;
 
-            var model = new MarketplaceModel { Age = new MarketplaceValue(10) };
+            //var model = new MarketplaceModel { Age = new MarketplaceValue(10) };
 
             return new MarketplaceActionResult(View(model));
         }
