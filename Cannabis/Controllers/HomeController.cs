@@ -33,7 +33,7 @@ namespace Cannabis.Controllers
         public IActionResult Error()
         {
             return new ActionResults.ViewResult(
-                View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier })
+                View(new ErrorViewModel { RequestId = new CannabisValue(Activity.Current?.Id ?? HttpContext.TraceIdentifier) })
             );
         }
     }

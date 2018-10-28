@@ -31,7 +31,14 @@ namespace Cannabis.Attributes
             
             var model = bindingContext.ModelType
                 .GetConstructor(new Type[0])
-                .Invoke(new object[0]);
+                ?.Invoke(new object[0]);
+            if (model == null)
+            {
+                bindingContext.ModelState.AddModelError(
+                    bindingContext.FieldName,
+                    $"Model {bindingContext.ModelType} is not supported");
+                return Task.CompletedTask;
+            }
 
             var parameters = bindingContext.HttpContext.Request.Query;
             foreach (var property in bindingContext.ModelType
@@ -43,46 +50,13 @@ namespace Cannabis.Attributes
                 var value = parameters[property.Name].FirstOrDefault();
                 if (value == null)
                     continue;
-
-                var typeOfValue = property.GetCustomAttribute<CannabisValidValueAttribute>()?.ValidType
-                    ?? typeof(string);
-                var cannabisValue = ToCannabisValue(value, typeOfValue);
-                if (cannabisValue == null)
-                {
-                    cannabisValue = new CannabisValue(value);
-                    bindingContext.ModelState.AddModelError(property.Name, $"Can't parse \"{value}\" to type {typeOfValue}");
-                }
-                property.SetValue(model, cannabisValue);
+                property.SetValue(model, new CannabisValue(value));
             }
 
             bindingContext.Result = ModelBindingResult.Success(model);
             return Task.CompletedTask;
         }
 
-        private static CannabisValue ToCannabisValue(string stringValue, Type type)
-        {
-            if (!Parsers.TryGetValue(type, out var parser))
-                return null;
-
-            var value = parser(stringValue);
-            if (value == null)
-                return null;
-
-            return new CannabisValue(value);
-        }
-
         private static readonly Type ValueType = typeof(CannabisValue);
-
-        private static readonly Dictionary<Type, Func<string, object>> Parsers
-            = new Dictionary<Type, Func<string, object>>
-            {
-                { typeof(bool), value => bool.TryParse(value, out var result) ? (object)result : null },
-                { typeof(DateTime), value => DateTime.TryParse(value, out var result) ? (object)result : null },
-                { typeof(double), value => double.TryParse(value, out var result) ? (object)result : null },
-                { typeof(float), value => float.TryParse(value, out var result) ? (object)result : null },
-                { typeof(int), value => int.TryParse(value, out var result) ? (object)result : null },
-                { typeof(long), value => long.TryParse(value, out var result) ? (object)result : null },
-                { typeof(string), value => value }
-            };
     }
 }

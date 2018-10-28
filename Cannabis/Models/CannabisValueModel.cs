@@ -22,6 +22,7 @@ namespace Cannabis.Models
 
         private ValidationResult ValidateMember(MemberInfo member, object value)
         {
+            value = (value as CannabisValue)?.Value;
             var type = value?.GetType();
             if (type == null)
                 return null;
