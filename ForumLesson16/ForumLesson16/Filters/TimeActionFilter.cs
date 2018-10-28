@@ -27,6 +27,8 @@ namespace ForumLesson16
             stopwatch.Stop();
             var traceEnd = traceStart
                            .AddMilliseconds(stopwatch.ElapsedMilliseconds);
+            if (traceEnd>1)
+                    context.Result = new ContentResult { Content = "Слишком долго!" };
         }
     }
 }
