@@ -26,12 +26,12 @@ namespace ForumLesson16
 
             services.AddSingleton<IHomeForumController, HomeForumController>();
 
-            services.AddMvc(/*options =>
+            services.AddMvc(options =>
             {
                 options.Filters.Add(new TimeActionFilter());
                 options.Filters.Add(new ReverseExceptionFilter());
                 options.Filters.Add(new TimeActionFilter());
-            }*/)
+            })
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
                 .AddControllersAsServices();           
         }

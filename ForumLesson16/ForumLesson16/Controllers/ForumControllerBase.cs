@@ -4,6 +4,6 @@ namespace ForumLesson16
 {
     public abstract class ForumControllerBase : Controller, IForumController
     {
-        public int Counter { get; protected set; }
+        public int RequestCounter { get; protected set; }
     }
 }

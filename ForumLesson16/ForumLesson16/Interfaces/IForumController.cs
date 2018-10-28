@@ -2,6 +2,6 @@
 {
     public interface IForumController
     {
-        int Counter { get; }
+        int RequestCounter { get; }
     }
 }

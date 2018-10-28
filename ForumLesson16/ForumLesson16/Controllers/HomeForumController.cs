@@ -12,15 +12,14 @@ namespace ForumLesson16
         [HttpGet]
         public async Task<IActionResult> Action()
         {
-            Counter++;
-            ViewData["Message"] = "HomeForumController's Action!";
+            RequestCounter++;
             return await Task.FromResult(new ForumActionResult());
         }
 
         [HttpPost]
         public async Task<IActionResult> Action([FromForumSpec]ForumModel forumModel)
         {
-            Counter++;
+            RequestCounter++;
             return await Task.FromResult(new ForumActionResult());
         }
     }
