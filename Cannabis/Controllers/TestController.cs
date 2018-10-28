@@ -3,7 +3,6 @@ using Cannabis.Attributes;
 using Cannabis.Models;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Threading;
 
 namespace Cannabis.Controllers
 {
@@ -37,6 +36,11 @@ namespace Cannabis.Controllers
         public IActionResult GetFacked(int count)
         {
             return RawResult.Create($"You were facked {count} times");
+        }
+
+        public IActionResult TestView()
+        {
+            return new ActionResultWrapper(View());
         }
     }
 }

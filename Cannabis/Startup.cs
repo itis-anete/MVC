@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Controllers;
+using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -35,10 +36,12 @@ namespace Cannabis
             mvcBuilder.SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             mvcBuilder.AddMvcOptions(options =>
             {
-                options.Filters.Add(new TimeoutFilter());
+                options.Filters.Add(new HtmlTextFilter());
                 options.Filters.Add(new ReverseExceptionFilter());
+                options.Filters.Add(new TimeoutFilter());
             });
 
+            services.AddSingleton<IRazorViewEngine, ViewEngine.ViewEngine>();
             services.Replace(ServiceDescriptor.Singleton<IControllerFactory, ControllerFactory>());
         }
 
@@ -59,10 +62,6 @@ namespace Cannabis
                     name: "default",
                     template: "",
                     defaults: new { controller = "Home", action = "Index" });
-                routes.MapRoute(
-                    name: "test",
-                    template: "test",
-                    defaults: new { controller = "Test", action = "Test" });
 
                 routes.Routes.Add(new CannabisRouter(routes.DefaultHandler));
             });
