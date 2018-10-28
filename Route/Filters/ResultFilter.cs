@@ -18,7 +18,7 @@ namespace Route.Filters
             return Task.CompletedTask;
         }
 
-        public void OnResultExecuting(ResultExecutingContext context)
+        public async void OnResultExecuting(ResultExecutingContext context)
         {
             var page = context.ActionDescriptor.RouteValues["action"];
             var containsText = false;
@@ -60,7 +60,7 @@ namespace Route.Filters
                 if (containsText) break;
             }
 
-            if (containsText) throw new Exception("Contains text");
+            if (containsText) throw new Exception("Contains text");//  await context.HttpContext.Response.WriteAsync("Contains text");
         }
 
         public void OnResultExecuted(ResultExecutedContext context)

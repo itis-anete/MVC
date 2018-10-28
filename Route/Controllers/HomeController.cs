@@ -63,7 +63,7 @@ namespace Route.Controllers
             }));
         }
 
-        public InfoSystemActionResult Contact([FromInfoSystemSpec] InfoSystemValueModel model1)
+        public InfoSystemActionResult Contact()
         {
             return new InfoSystemActionResult(View());
         }
@@ -87,8 +87,10 @@ namespace Route.Controllers
             return new InfoSystemActionResult(View(Value));
         }
 
-        public void GetCount([FromInfoSystemSpec] InfoSystemValueModel str)
+        public void GetCount([FromInfoSystemSpec] InfoSystemValueModel model1)
         {
+            var x = ModelState;
+            var y = ModelBinderFactory;
             Response.WriteAsync(CallCount.ToString());
         }
     }

@@ -8,6 +8,11 @@ namespace Route.Models
     {
         public InfoSystemValue Test { get; set; }
 
+        public InfoSystemValueModel(object value) : base(value)
+        {
+            //Validate();
+        }
+
         public InfoSystemValueModel()
         {
         }
