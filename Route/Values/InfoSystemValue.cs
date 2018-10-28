@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Route
 {
     [ModelBinder(typeof(FromInfoSystemSpecAttribute))]
-    public class InfoSystemValue
+    public class InfoSystemValue : Attribute
     {
         public InfoSystemValue()
         {   
@@ -107,25 +107,5 @@ namespace Route
 
             throw new InvalidOperationException("No value");
         }
-
-        public Type Type => intValue != null
-            ? typeof(int)
-            : boolValue != null
-                ? typeof(bool)
-                : doubleValue != null
-                    ? typeof(double)
-                    : stringValue != null
-                        ? typeof(string)
-                        : typeof(object);
-
-        public object Value => objValue is int
-            ? long.Parse(objValue.ToString())
-            : objValue is double
-                ? double.Parse(objValue.ToString())
-                : objValue is bool
-                    ? bool.Parse(objValue.ToString())
-                    : objValue is string
-                        ? objValue.ToString()
-                        : objValue;
     }
 }

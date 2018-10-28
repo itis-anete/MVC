@@ -3,17 +3,18 @@ using Microsoft.AspNetCore.Routing;
 using System;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Routing.Internal;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Route
 {
-    public class RouteBuilder : IRouteBuilder
+    public class RouteBuilder
     {
         public IApplicationBuilder ApplicationBuilder { get; }
         public IRouter DefaultHandler { get; set; }
         public IServiceProvider ServiceProvider { get; }
         public IList<IRouter> Routes { get; } = new List<IRouter>();
 
-        public RouteBuilder(IApplicationBuilder builder, IRouter handler)
+        public RouteBuilder(IApplicationBuilder builder, IRouter handler = null)
         {
             if (builder == null)
             {

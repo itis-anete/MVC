@@ -9,13 +9,13 @@ namespace Route
 
         public InfoSystemActionResult()
         {
-            
         }
+
         public InfoSystemActionResult(ViewResult view)
         {
             _view = view;
         }
-        
+
         public async Task ExecuteResultAsync(ActionContext context)
         {
             context.HttpContext.Response.Headers.Add("ServerApplication", "InfoSystem");

@@ -32,8 +32,8 @@ namespace Route
                 throw new ArgumentException(nameof(optionsAccessor));
 
             options.ViewLocationFormats.Clear();
-            options.ViewLocationFormats.Add("/Views/InfoSystem/{1}/{0}/cshtml.{0}.cshtml");
-            options.ViewLocationFormats.Add("/Views/Shared/{0}.cshtml");
+            options.ViewLocationFormats.Add("/InfoSystem/{1}/{0}/cshtml.{0}.cshtml");
+            options.ViewLocationFormats.Add("/Shared/{0}.cshtml");
         }
 
         /*public InfoSystemViewEngineResult FindView(ActionContext context, string viewName, bool isMainPage)

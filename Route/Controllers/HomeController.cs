@@ -1,29 +1,41 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Route.Models;
 using Route.Filters;
+using System.Reflection;
+using Microsoft.EntityFrameworkCore.Update.Internal;
 
 namespace Route.Controllers
 {
-    [ActionFilter]
     public class HomeController : Controller, IInfoSystemController
     {
-        public IActionResult Index() //[FromBody] int param)
+        private static int CallCount;
+        private InfoSystemValue Value { get; set; }
+
+        public HomeController()
         {
-            //return !ModelState.IsValid ? Error() : View();
-            return View();
+            CallCount++;
         }
 
-        public IActionResult About()
+        //[HttpGet]
+        public InfoSystemActionResult Index()
+        {
+            return new InfoSystemActionResult(View());
+        }
+
+        //[HttpGet]
+        public InfoSystemActionResult About()
         {
             ViewData["Message"] = "Your application description page.";
             ViewData["Page Title"] = "My App";
             ViewData["Object"] = new {Title = "Point", x = 1, y = 2};
             ViewBag.PageTitle = "New Title";
 
-            return View(new ViewModel
+            return new InfoSystemActionResult(View(new ViewModel
             {
                 Name = "123",
                 Options = new List<KeyValue>
@@ -34,38 +46,50 @@ namespace Route.Controllers
                         Value = "123123"
                     }
                 }
-            });
+            }));
         }
 
-        public IActionResult Privacy()
+        public InfoSystemActionResult Privacy()
         {
-            return View();
+            return new InfoSystemActionResult(View());
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
+        public InfoSystemActionResult Error()
         {
-            return View(new ErrorViewModel
+            return new InfoSystemActionResult(View(new ErrorViewModel
             {
                 RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier
-            });
+            }));
         }
 
-        public IActionResult Test(
-            [FromInfoSystemSpec] int x, // привязывается
-            string y) // не привязывается)
+        public InfoSystemActionResult Contact([FromInfoSystemSpec] InfoSystemValueModel model1)
         {
-            throw new NotImplementedException();
+            return new InfoSystemActionResult(View());
         }
 
-        public IActionResult Test2(int a)
+        //[ActionFilter]
+        //[ExceptionFilter]
+        [ResultFilter]
+        public InfoSystemActionResult MyGet()
         {
-            return new JsonResult(new {Title = "title"});
+            try
+            {
+                var xx = Request.Path.Value.Split('/')[3];
+                if (xx == string.Empty) throw new ArgumentException();
+                Value = new InfoSystemValue(xx);
+            }
+            catch
+            {
+                Value = new InfoSystemValue(new object());
+            }
+
+            return new InfoSystemActionResult(View(Value));
         }
 
-        public IActionResult Contact()
+        public void GetCount([FromInfoSystemSpec] InfoSystemValueModel str)
         {
-            return View();
+            Response.WriteAsync(CallCount.ToString());
         }
     }
 }

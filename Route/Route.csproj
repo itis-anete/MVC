@@ -13,8 +13,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="Views\InfoSystem\.DS_Store" />
-    <Content Include="Views\InfoSystem\Home\.DS_Store" />
+    <_ContentIncludedByDefault Remove="Views\InfoSystem\Home\About\cshtml.About.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\InfoSystem\Home\Contact\cshtml.Contact.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\InfoSystem\Home\Index\cshtml.Index.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\InfoSystem\Home\MyGet\cshtml.MyGet.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\InfoSystem\Home\Privacy\cshtml.Privacy.cshtml" />
   </ItemGroup>
 
 </Project>

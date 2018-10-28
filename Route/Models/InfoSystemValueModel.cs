@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
@@ -5,13 +6,21 @@ namespace Route.Models
 {
     public class InfoSystemValueModel : InfoSystemValue, IValidatableObject
     {
-        public InfoSystemValueModel(object value) : base(value)
+        public InfoSystemValue Test { get; set; }
+
+        public InfoSystemValueModel()
         {
         }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
-            throw new System.NotImplementedException();
+            var xx = validationContext.ObjectInstance as InfoSystemValueModel;
+            foreach (var propertyInfo in typeof(InfoSystemValueModel).GetProperties())
+            {
+                var x = propertyInfo;
+            }
+
+            return new List<ValidationResult>();
         }
     }
 }

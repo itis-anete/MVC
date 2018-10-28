@@ -15,9 +15,10 @@ namespace Route
             if (y == null)
             {
                 bindingContext.Result = ModelBindingResult.Failed();
+                bindingContext.ModelState.AddModelError("1", "123");
                 return Task.CompletedTask;
             }
-            model.Prop = new InfoSystemValue(y);
+            model.Test = new InfoSystemValue(y);
             bindingContext.Result = ModelBindingResult.Success(model);
             return Task.CompletedTask;
         }

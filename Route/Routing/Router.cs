@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc.Abstractions;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.Mvc.Internal;
 using Microsoft.AspNetCore.Routing;
+using Microsoft.EntityFrameworkCore.Internal;
 using Microsoft.Extensions.Logging;
 using Route.Controllers;
 
@@ -17,79 +18,48 @@ namespace Route
 {
     public class Router : IRouter
     {
-        public static ThreadLocal<DateTime> Start { get; private set; } = new ThreadLocal<DateTime>(() => DateTime.Now);
+        public Router(IRouter router)
+        {
+            _defaultRouter = router ?? throw new ArgumentNullException(nameof(router));
+        }
+        
+        public static ThreadLocal<DateTime> Start { get; } = new ThreadLocal<DateTime>(() => DateTime.Now);
 
+        private readonly IRouter _defaultRouter;
+        
         public VirtualPathData GetVirtualPath(VirtualPathContext context)
         {
             throw new NotImplementedException();
         }
 
-        public Task RouteAsync(RouteContext context)
+        public async Task RouteAsync(RouteContext context)
         {
-            /*if (context == null)
-            {
-                throw new ArgumentNullException(nameof(context));
-            }
-
-            var candidates = _actionSelector.SelectCandidates(context);
-            if (candidates == null || candidates.Count == 0)
-            {
-                //_logger.NoActionsMatched(context.RouteData.Values);
-                return Task.CompletedTask;
-            }
-
-            var actionDescriptor = _actionSelector.SelectBestCandidate(context, candidates);
-            if (actionDescriptor == null)
-            {
-                //_logger.NoActionsMatched(context.RouteData.Values);
-                return Task.CompletedTask;
-            }*/
-
-            /*context.Handler = (c) =>
-            {
-                var routeData = c.GetRouteData();
-
-                var actionContext = new ActionContext(context.HttpContext, routeData, actionDescriptor);
-                if (_actionContextAccessor != null)
-                {
-                    _actionContextAccessor.ActionContext = actionContext;
-                }
-
-                var invoker = _actionInvokerFactory.CreateInvoker(actionContext);
-                if (invoker == null)
-                {
-                    throw new InvalidOperationException();
-                }
-
-                return invoker.InvokeAsync();
-            };*/
-            /*var methodName = "";
-            var c = context.HttpContext.Request.Path.Value.Split('/');
-            try
-            {
-                methodName = c[2];
-            }
-            catch(Exception e)
-            {
-                methodName = "/";
-            }
-
-            if (HomeController._Delegates == null)
-                new HomeController();
-            
-            var method = HomeController._Delegates[methodName];
-            
-            method.Invoke();*/
-
-            var routeData = new RouteData();
-
-            var x = context.HttpContext.Request.Path;
-            routeData.Values["controller"] = "Home";
-            routeData.Values["action"] = "Index";
-            context.RouteData = routeData;
-            
-            context.Handler = (c) => Task.CompletedTask;
-            return Task.CompletedTask;
+            Route(context);
+            await _defaultRouter.RouteAsync(context); 
         }
+        
+        private static void Route(RouteContext context)
+        {
+            var parameters =
+                context.HttpContext.Request.Path.Value?.Split('/', StringSplitOptions.RemoveEmptyEntries) ??
+                throw new ArgumentException(nameof(context.HttpContext.Request.Path));
+            if (ArgumentsAreInvalid(parameters)) return;
+            var startIndex = "InfoSystem_".Length;
+            var controllerName = parameters[0].Substring(startIndex,
+                parameters[0].Length - startIndex - "Controller".Length);
+            var actionName = parameters[1];
+            var methodName = context.HttpContext.Request.Method;
+            if (!actionName.StartsWith(methodName)) return;
+            actionName = actionName.Substring(methodName.Length);
+            context.RouteData.Values["controller"] = controllerName;
+            context.RouteData.Values["action"] = actionName;
+        }
+
+        private static bool ArgumentsAreInvalid(IReadOnlyList<string> parameters) => parameters == null ||
+                                                                                     parameters.Count < 2 ||
+                                                                                     parameters.Count == 3 &&
+                                                                                     !parameters[2].StartsWith('?') ||
+                                                                                     parameters.Count > 3 ||
+                                                                                     !parameters[0].StartsWith("InfoSystem_");
     }
 }
