@@ -10,11 +10,6 @@ namespace ForumLesson16
         public bool IsPositive { get; private set; }
         public DateTimeOffset Offset { get; private set; }
 
-        public ForumValidValueAttribute()
-        {
-
-        }
-
         public ForumValidValueAttribute(Type validType, int maxLength, bool isPositive)
         {
             ValidType = validType;

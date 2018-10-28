@@ -1,34 +1,33 @@
 ﻿using Microsoft.AspNetCore.Mvc.Filters;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace ForumLesson16
 {
     public class TimeActionFilter : IActionFilter
     {
-        private DateTime traceStart;
-        public readonly Stopwatch stopwatch;
+        private ThreadLocal<bool> isCancelled = new ThreadLocal<bool>() { Value = false };
 
-        public TimeActionFilter()
+        public void OnActionExecuted(ActionExecutedContext context)
         {
-            stopwatch = new Stopwatch();
+            context.Canceled = isCancelled.Value;
         }
 
         public void OnActionExecuting(ActionExecutingContext context)
         {
-            traceStart = DateTime.UtcNow;
-            stopwatch.Start();
+            Timer.Stopwatch.Stop();
+            if (Timer.Stopwatch.ElapsedMilliseconds > 500)
+                isCancelled.Value = true;
         }
+    }
 
-        public void OnActionExecuted(ActionExecutedContext context)
-        {
-            stopwatch.Stop();
-            var traceEnd = traceStart
-                           .AddMilliseconds(stopwatch.ElapsedMilliseconds);
-            if (traceEnd>1)
-                    context.Result = new ContentResult { Content = "Слишком долго!" };
-        }
+    public static class Timer
+    {
+        public static Stopwatch Stopwatch => stopwatch.Value;
+        private static readonly ThreadLocal<Stopwatch> stopwatch;
     }
 }

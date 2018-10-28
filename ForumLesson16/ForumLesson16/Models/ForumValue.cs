@@ -9,9 +9,25 @@ namespace ForumLesson16
     {
         public object Value
         {
-            get;
+            get; set;
         }
 
         public Type ValueType { get; private set; }
+
+        public ForumValue()
+        {
+
+        }
+
+        public ForumValue(object value)
+        {
+            _object = value;
+            ValueType = value.GetType();
+        }
+
+        private int _int;
+        private bool _boolean;
+        private string _string;
+        private object _object;
     }
 }

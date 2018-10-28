@@ -4,6 +4,8 @@ using System;
 using System.Reflection;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Threading;
+using System.Diagnostics;
 
 namespace ForumLesson16
 {
@@ -21,6 +23,8 @@ namespace ForumLesson16
 
         public async Task RouteAsync(RouteContext context)
         {
+            Timer.Stopwatch.Reset();
+            Timer.Stopwatch.Start();
             var httpMethod = context.HttpContext.Request.Method;
             var urlTokens = context.HttpContext.Request.Path.Value
                 .TrimStart('/').TrimEnd('/').Split('/');
