@@ -1,23 +1,17 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
-using System.Threading.Tasks;
+﻿using Newtonsoft.Json;
 
 namespace Cannabis.ActionResults
 {
-    public class JsonResult<T> : CannabisResult
+    public class JsonResult<T> : DataResult<T>
     {
-        public T Data { get; }
+        public JsonResult(T data) : base(data) { }
 
-        public JsonResult(T data)
-        {
-            Data = data;
-        }
+        protected override string DataAsString => JsonConvert.SerializeObject(Data);
+        protected override string ContentType => "application/json";
+    }
 
-        protected override async Task ExecuteResultAsyncInternal(ActionContext context)
-        {
-            var responseString = JsonConvert.SerializeObject(Data);
-            await context.HttpContext.Response.WriteAsync(responseString);
-        }
+    public static class JsonResult
+    {
+        public static JsonResult<T> Create<T>(T data) => new JsonResult<T>(data);
     }
 }

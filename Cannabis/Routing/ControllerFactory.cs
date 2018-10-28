@@ -25,20 +25,27 @@ namespace Cannabis.Routing
             if (context == null)
                 throw new ArgumentNullException(nameof(context));
 
+            ICannabisController controller;
             var controllerName = context.ActionDescriptor.ControllerName;
-            if (!_controllers.TryGetValue(controllerName, out var controller))
-            {
-                controller = _controllerActivator.Create(context) as ICannabisController;
-                if (controller != null)
-                    _controllers[controllerName] = controller;
-            }
+            lock (_controllers)
+                if (!_controllers.TryGetValue(controllerName, out controller))
+                /* Required by task. In fact separate instance of controller is needed for every query.
+                 * Take account that without multiple controllers we can not serve several
+                 * queries for the same controller asynchronously otherwise we can get errors.
+                 */
+                {
+                    controller = _controllerActivator.Create(context) as ICannabisController;
+                    if (controller != null)
+                        _controllers[controllerName] = controller;
+                }
 
             if (controller != null)
-            {
-                foreach (var activator in _propertyActivators)
-                    activator.Activate(context, controller);
-                ++controller.CallCounter;
-            }
+                lock (controller)
+                {
+                    foreach (var activator in _propertyActivators)
+                        activator.Activate(context, controller);
+                    ++controller.CallCounter;
+                }
             return controller;
         }
 

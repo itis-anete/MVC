@@ -1,4 +1,5 @@
-﻿using Cannabis.Routing;
+﻿using Cannabis.Filters;
+using Cannabis.Routing;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -30,7 +31,14 @@ namespace Cannabis
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            var mvcBuilder = services.AddMvc();
+            mvcBuilder.SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            mvcBuilder.AddMvcOptions(options =>
+            {
+                options.Filters.Add(new TimeoutFilter());
+                options.Filters.Add(new ReverseExceptionFilter());
+            });
+
             services.Replace(ServiceDescriptor.Singleton<IControllerFactory, ControllerFactory>());
         }
 
@@ -44,7 +52,7 @@ namespace Cannabis
 
             app.UseStaticFiles();
             app.UseCookiePolicy();
-
+            
             app.UseMvc(routes =>
             {
                 routes.MapRoute(

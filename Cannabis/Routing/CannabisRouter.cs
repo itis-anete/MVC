@@ -18,12 +18,8 @@ namespace Cannabis.Routing
 
         public async Task RouteAsync(RouteContext context)
         {
-            TryCustomRoute(context);
-            await _baseRouter.RouteAsync(context); 
-        }
+            context.RouteData.DataTokens["ActionStartTime"] = DateTime.Now;
 
-        private void TryCustomRoute(RouteContext context)
-        {
             var segments = context.HttpContext.Request.Path.Value?
                 .Split('/', StringSplitOptions.RemoveEmptyEntries);
             if (segments == null ||
@@ -35,9 +31,15 @@ namespace Cannabis.Routing
             var controllerNamePrefix = ProjectInfo.ProjectName + '_';
             if (!segments[0].StartsWith(controllerNamePrefix))
                 return;
+
+            var controllerNameLength = segments[0].Length
+                - controllerNamePrefix.Length
+                - "Controller".Length;
+            if (controllerNameLength <= 0)
+                return;
             var controllerName = segments[0].Substring(
                 controllerNamePrefix.Length,
-                segments[0].Length - controllerNamePrefix.Length - "Controller".Length
+                controllerNameLength
             );
 
             var actionName = segments[1];
@@ -48,6 +50,8 @@ namespace Cannabis.Routing
 
             context.RouteData.Values["controller"] = controllerName;
             context.RouteData.Values["action"] = actionName;
+
+            await _baseRouter.RouteAsync(context); 
         }
 
         private readonly IRouter _baseRouter;
