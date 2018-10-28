@@ -19,6 +19,9 @@
     <Content Update="Marketplace\Index\cshtml.Index.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
+    <Content Update="Marketplace\MarketplaceTest\cshtml.MarketplaceTest.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
     <Content Update="Marketplace\Marketplace\cshtml.Marketplace.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>

@@ -14,7 +14,7 @@ namespace MarketplaceMVC.Models
 
         private ValidationResult ValidateMember(MemberInfo member, object value)
         {
-            if (member.GetCustomAttribute<MarketplaceValidValueAttribute>() == null)
+            if (member?.GetType() == null)
                 return null;
 
             var errorMessage = IsMarketplaceValueValid(value, 200, 0);

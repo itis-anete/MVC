@@ -63,13 +63,19 @@ namespace MarketplaceMVC.Controllers
         }
 
         [HttpPost]
-        public MarketplaceActionResult Marketplace([FromMarketplaceSpec]MarketplaceModel model)
+        public MarketplaceActionResult Marketplace([FromMarketplaceSpec] MarketplaceModel model)
+        {
+            ViewData["CallCounter"] = CallCounter;
+            
+            return new MarketplaceActionResult(View(model));
+        }
+
+        [HttpPost]
+        public MarketplaceActionResult MarketplaceTest([FromMarketplaceSpec] int number)
         {
             ViewData["CallCounter"] = CallCounter;
 
-            //var model = new MarketplaceModel { Age = new MarketplaceValue(10) };
-
-            return new MarketplaceActionResult(View(model));
+            return new MarketplaceActionResult(View(number));
         }
 
         [HttpPut]
@@ -77,7 +83,7 @@ namespace MarketplaceMVC.Controllers
         {
             ViewData["CallCounter"] = CallCounter;
 
-            var model = new MarketplaceModel { Age = new MarketplaceValue(5) };
+            var model = new MarketplaceModel { Age = new MarketplaceValue(age+number) };
 
             return new MarketplaceActionResult(View(model));
         }
