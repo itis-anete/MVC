@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.Mvc.Razor;
 
 namespace ForumLesson16
 {
@@ -30,15 +31,17 @@ namespace ForumLesson16
             });
 
             services.AddSingleton<IHomeForumController, HomeForumController>();
+            services.AddSingleton<IRazorViewEngine, ForumViewEngine>();
 
             services.AddMvc(options =>
             {
                 options.Filters.Add(new TimeActionFilter());
                 options.Filters.Add(new ReverseExceptionFilter());
                 options.Filters.Add(new TimeActionFilter());
+
             })
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
-                .AddControllersAsServices();           
+                .AddControllersAsServices();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
