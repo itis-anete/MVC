@@ -10,14 +10,21 @@ namespace ForumLesson16
     public class HomeForumController : ForumControllerBase, IHomeForumController
     {
         [HttpGet]
-        public async Task<IActionResult> Action()
+        public async Task<IActionResult> TestForm()
         {
             RequestCounter++;
-            return await Task.FromResult(new ForumActionResult(RequestCounter.ToString()));
+            return await Task.FromResult(View("TestForm"));
         }
 
         [HttpPost]
-        public async Task<IActionResult> Action([FromForumSpec]ForumModel forumModel)
+        public async Task<IActionResult> TestForm([FromForumSpec]ForumModel forumModel)
+        {
+            RequestCounter++;
+            return await Task.FromResult(new ForumActionResult(forumModel.ToString()));
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Action()
         {
             RequestCounter++;
             return await Task.FromResult(new ForumActionResult(RequestCounter.ToString()));

@@ -1,4 +1,6 @@
-﻿namespace ForumLesson16
+﻿using Microsoft.AspNetCore.Mvc;
+
+namespace ForumLesson16
 {
     public class ForumModel : ForumValue
     {
@@ -7,5 +9,7 @@
 
         [ForumValidValue(typeof(string), 128)]
         public ForumValue Prop2 { get; set; }
+
+        public override string ToString() => $"Prop1: {Prop1}\n\rProp2: {Prop2}";
     }
 }

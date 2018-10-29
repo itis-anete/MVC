@@ -21,8 +21,7 @@ namespace ForumLesson16
 
         public async Task RouteAsync(RouteContext context)
         {
-            Timer.Stopwatch.Reset();
-            Timer.Stopwatch.Start();
+            Timer.StartNewTimer();
             var httpMethod = context.HttpContext.Request.Method;
             var urlTokens = context.HttpContext.Request.Path.Value
                 .TrimStart('/').TrimEnd('/').Split('/');
@@ -37,6 +36,7 @@ namespace ForumLesson16
                 var controllerType = Type.GetType($"ForumLesson16.{controllerClassName}Controller", true);
                 var attributeType = GetHtmlMethodAttributeType(httpMethod);
 
+
                 var controllerMethodInfo = controllerType
                     .GetMethods()
                     .FirstOrDefault(method => 
@@ -50,18 +50,21 @@ namespace ForumLesson16
                     await defaultRouter.RouteAsync(context);
                 }
             }
-        }
 
-        private Type GetHtmlMethodAttributeType(string methodName)
-        {
-            switch (methodName)
+            Type GetHtmlMethodAttributeType(string methodName)
             {
-                case "GET":
-                    return typeof(HttpGetAttribute);
-                case "POST":
-                    return typeof(HttpPostAttribute);
-                default:
-                    throw new ArgumentException();
+                switch (methodName)
+                {
+                    case "GET":
+                        return typeof(HttpGetAttribute);
+                    case "POST":
+                        return typeof(HttpPostAttribute);
+                    default:
+                        {
+                            context.HttpContext.Response.StatusCode = 400;
+                            return typeof(HttpGetAttribute);
+                        }
+                }
             }
         }
     }

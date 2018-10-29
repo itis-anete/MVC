@@ -19,29 +19,23 @@ namespace ForumLesson16
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc(options =>
-            {
-                options.Filters.Add(typeof(TimeActionFilter));
-            });
-
             services.Configure<CookiePolicyOptions>(options =>
             {
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            services.AddSingleton<IHomeForumController, HomeForumController>();
-            services.AddSingleton<IRazorViewEngine, ForumViewEngine>();
-
             services.AddMvc(options =>
             {
                 options.Filters.Add(new TimeActionFilter());
                 options.Filters.Add(new ReverseExceptionFilter());
                 options.Filters.Add(new TimeActionFilter());
-
             })
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
                 .AddControllersAsServices();
+
+            services.AddSingleton<HomeForumController>();
+            services.AddSingleton<IRazorViewEngine, ForumViewEngine>();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)

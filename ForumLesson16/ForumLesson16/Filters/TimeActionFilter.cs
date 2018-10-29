@@ -11,6 +11,10 @@ namespace ForumLesson16
         public void OnActionExecuted(ActionExecutedContext context)
         {
             context.Canceled = isCancelled.Value;
+            if (context.Canceled)
+            {
+                context.HttpContext.Response.StatusCode = 408;
+            }
         }
 
         public void OnActionExecuting(ActionExecutingContext context)
@@ -23,7 +27,16 @@ namespace ForumLesson16
     public static class Timer
     {
         public static Stopwatch Stopwatch => stopwatch.Value;
-        private static readonly ThreadLocal<Stopwatch> stopwatch = 
-            new ThreadLocal<Stopwatch>();
+        private static readonly ThreadLocal<Stopwatch> stopwatch;
+
+        static Timer()
+        {
+            stopwatch = new ThreadLocal<Stopwatch>();
+        }
+
+        public static void StartNewTimer()
+        {
+            stopwatch.Value = Stopwatch.StartNew();
+        }
     }
 }
