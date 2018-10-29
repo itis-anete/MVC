@@ -1,33 +1,43 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace ForumLesson16
 {
     public class ForumValue : ForumValueModel
     {
-        public object Value
-        {
-            get; set;
-        }
+        public object Value => _long ?? _bool ?? _string ?? _object;
 
         public Type ValueType { get; private set; }
 
         public ForumValue()
-        {
-
-        }
+        { }
 
         public ForumValue(object value)
         {
-            _object = value;
-            ValueType = value.GetType();
+            if (value is long @long)
+            {
+                _long = @long;
+                ValueType = typeof(long);
+            }
+            else if (value is bool @bool)
+            {
+                _bool = @bool;
+                ValueType = typeof(bool);
+            }
+            else if (value is string @string)
+            {
+                _string = @string;
+                ValueType = typeof(string);
+            }
+            else
+            {
+                _object = value;
+                ValueType = typeof(object);
+            }
         }
 
-        private int _int;
-        private bool _boolean;
-        private string _string;
-        private object _object;
+        private readonly long? _long;
+        private readonly bool? _bool;
+        private readonly string _string;
+        private readonly object _object;
     }
 }

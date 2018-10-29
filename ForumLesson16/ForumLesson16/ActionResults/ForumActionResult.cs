@@ -6,17 +6,17 @@ namespace ForumLesson16
 {
     public class ForumActionResult : ActionResult
     {
-        private readonly int requestCount;
+        private readonly string message;
 
-        public ForumActionResult(int requestCount)
+        public ForumActionResult(string message)
         {
-            this.requestCount = requestCount;
+            this.message = message;
         }
 
         public override Task ExecuteResultAsync(ActionContext context)
         {
             context.HttpContext.Response.Headers.Add("ServerApplication", "Forum");
-            return context.HttpContext.Response.WriteAsync(requestCount.ToString());
+            return context.HttpContext.Response.WriteAsync(message);
         }
     }
 }

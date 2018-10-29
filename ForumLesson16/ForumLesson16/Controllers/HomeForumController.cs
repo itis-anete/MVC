@@ -13,14 +13,14 @@ namespace ForumLesson16
         public async Task<IActionResult> Action()
         {
             RequestCounter++;
-            return await Task.FromResult(new ForumActionResult(RequestCounter));
+            return await Task.FromResult(new ForumActionResult(RequestCounter.ToString()));
         }
 
         [HttpPost]
         public async Task<IActionResult> Action([FromForumSpec]ForumModel forumModel)
         {
             RequestCounter++;
-            return await Task.FromResult(new ForumActionResult(RequestCounter));
+            return await Task.FromResult(new ForumActionResult(RequestCounter.ToString()));
         }
     }
 }

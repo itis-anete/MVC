@@ -1,10 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc.Filters;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace ForumLesson16
 {
@@ -20,14 +16,14 @@ namespace ForumLesson16
         public void OnActionExecuting(ActionExecutingContext context)
         {
             Timer.Stopwatch.Stop();
-            if (Timer.Stopwatch.ElapsedMilliseconds > 500)
-                isCancelled.Value = true;
+            isCancelled.Value = Timer.Stopwatch.ElapsedMilliseconds > 500;
         }
     }
 
     public static class Timer
     {
         public static Stopwatch Stopwatch => stopwatch.Value;
-        private static readonly ThreadLocal<Stopwatch> stopwatch;
+        private static readonly ThreadLocal<Stopwatch> stopwatch = 
+            new ThreadLocal<Stopwatch>();
     }
 }

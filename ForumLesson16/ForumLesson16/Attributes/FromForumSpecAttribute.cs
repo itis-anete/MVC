@@ -18,12 +18,21 @@ namespace ForumLesson16
 
             var properties = modelType
                 .GetProperties()
-                .Where(prop => prop.GetCustomAttribute<ForumValidValueAttribute>() != null);
+                .Select(prop => Tuple.Create(prop, prop.GetCustomAttribute<ForumValidValueAttribute>()))
+                .Where(tuple => tuple.Item1.PropertyType.GetType() == typeof(ForumValue) &&
+                                tuple.Item2 != null);
 
-            foreach (var property in properties)
+
+            foreach (var tuple in properties)
             {
-                if (requestParameters.TryGetValue(property.Name, out var value))
-                    property.SetValue(model, new ForumValue(value));
+                if (requestParameters.TryGetValue(tuple.Item1.Name, out var value))
+                {
+                    var forumValue = new ForumValue(value);
+                    tuple.Item1.SetValue(model, forumValue);
+
+                    if (forumValue.ValueType != tuple.Item1.PropertyType.GetType())
+                        bindingContext.ModelState.AddModelError(tuple.Item1.Name, "Invalid type!");
+                }
             }
 
             bindingContext.Result = ModelBindingResult.Success(model);
