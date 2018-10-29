@@ -11,7 +11,7 @@ namespace Route
     {
         public Task BindModelAsync(ModelBindingContext bindingContext)
         {
-            var model = new InfoSystemValueModel(new object());
+            var model = new InfoSystemValueModel();
             var parameters = bindingContext.ActionContext.ActionDescriptor.Parameters;
             var idValue = bindingContext.ActionContext.RouteData.Values["id"];
             if (idValue == null)

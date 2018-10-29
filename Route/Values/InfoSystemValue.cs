@@ -1,11 +1,12 @@
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Route
 {
     [ModelBinder(typeof(FromInfoSystemSpecAttribute))]
-    public class InfoSystemValue : ValidationAttribute
+    public class InfoSystemValue
     {
         public InfoSystemValue()
         {   
@@ -83,6 +84,35 @@ namespace Route
             doubleValue = value;
         }
 
+        public object Value
+        {
+            get
+            {
+                var variables = new[] {intValue, doubleValue, objValue, boolValue, stringValue};
+                return (from obj in variables where obj != null select obj.GetType()).FirstOrDefault(); 
+            }
+            set
+            {
+                switch (value)
+                {
+                        case int iValue:
+                            intValue = iValue;
+                            break;
+                        case bool bValue :
+                            boolValue = bValue;
+                            break;
+                        case double dValue:
+                            doubleValue = dValue;
+                            break;
+                        case string sValue:
+                            stringValue = sValue;
+                            break;
+                        default:
+                            objValue = value;
+                            break;
+                }
+            }
+        }
         private long? intValue;
         private double? doubleValue;
         private object objValue;
@@ -92,21 +122,7 @@ namespace Route
         public new Type GetType()
         {
             var variables = new[] {intValue, doubleValue, objValue, boolValue, stringValue};
-            foreach (var obj in variables)
-                if (obj != null)
-                    return obj.GetType();
-
-            throw new InvalidOperationException("Cannot determine value type");
-        }
-
-        public object GetValue()
-        {
-            var variables = new[] {intValue, doubleValue, objValue, boolValue, stringValue};
-            foreach (var obj in variables)
-                if (obj != null)
-                    return obj.GetType();
-
-            throw new InvalidOperationException("No value");
+            return (from obj in variables where obj != null select obj.GetType()).FirstOrDefault();
         }
     }
 }
