@@ -27,7 +27,8 @@ namespace ForumLesson16
             {
                 if (requestParameters.TryGetValue(tuple.Item1.Name, out var value))
                 {
-                    var forumValue = new ForumValue(value);
+                    var parameter = ParseParameter(value);
+                    var forumValue = new ForumValue(parameter);
                     tuple.Item1.SetValue(model, forumValue);
 
                     if (forumValue.ValueType != tuple.Item1.PropertyType.GetType())
@@ -37,6 +38,27 @@ namespace ForumLesson16
 
             bindingContext.Result = ModelBindingResult.Success(model);
             return Task.CompletedTask;
+        }
+
+        private object ParseParameter(string parameter)
+        {
+            if (int.TryParse(parameter, out int intValue))
+            {
+                return intValue;
+            }
+            else if (long.TryParse(parameter, out long longValue))
+            {
+                return longValue;
+            }
+            else if (bool.TryParse(parameter, out bool boolValue))
+            {
+                return boolValue;
+            }
+            else if (DateTimeOffset.TryParse(parameter, out DateTimeOffset dateTimeOffset))
+            {
+                return dateTimeOffset;
+            }
+            return parameter;
         }
     }
 }
